@@ -65,11 +65,14 @@ export default function FamilySyncSetupGuide({
           <span className="font-mono font-bold">shuumatsu-navi</span> を開く
         </li>
         <li>
-          上部 <strong>Storage</strong> → <strong>Create Database</strong> →{" "}
-          <strong>KV</strong> を選んで作成
+          一覧から <strong>Upstash</strong> をタップ
+          <span className="block mt-0.5 text-stone-500 dark:text-stone-400 pl-4">
+            ※ 旧「KV」は廃止。Upstash の Redis が同じ用途です
+          </span>
         </li>
         <li>
-          <strong>Connect to Project</strong> → Production にチェック → Connect
+          <strong>Redis</strong> を選んで作成 → プロジェクト{" "}
+          <span className="font-mono font-bold">shuumatsu-navi</span> に Connect
         </li>
         <li>
           <strong>Deployments</strong> → 最新の ⋯ → <strong>Redeploy</strong>

@@ -34,15 +34,17 @@ Vercel → Project → Settings → Git → Production Branch
 
 ### 家族データの端末間同期（おすすめ）
 
-お気に入り・「行った！」を家族のスマホで共有するには **Vercel KV** を接続します。
+お気に入り・「行った！」を家族のスマホで共有するには **Upstash Redis**（Vercel Marketplace）を接続します。
 
-**詳細手順（画像付き相当）:** [`docs/KV_SETUP.md`](docs/KV_SETUP.md)
+> **「KV」項目はありません。** Storage → Marketplace の **Upstash** → **Redis** を選んでください。
+
+**詳細手順:** [`docs/KV_SETUP.md`](docs/KV_SETUP.md)
 
 短縮版:
 
-1. https://vercel.com/dashboard → プロジェクト **shuumatsu-navi**
-2. **Storage** → **Create Database** → **KV** → プロジェクトに **Connect**
-3. **Deployments** → 最新 → **Redeploy**
+1. https://vercel.com/dashboard → **shuumatsu-navi** → **Storage**
+2. **Upstash** → **Redis** → プロジェクトに **Connect**
+3. **Deployments** → **Redeploy**
 4. 各スマホ: **設定 → 家族で共有** → 同じ家族コード
 
 接続確認: `https://shuumatsu-navi.vercel.app/api/family-sync` が 503 でなければ OK

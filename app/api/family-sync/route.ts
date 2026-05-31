@@ -23,7 +23,7 @@ export async function HEAD() {
 export async function GET(request: Request) {
   if (!isKvConfigured()) {
     return NextResponse.json(
-      { error: "クラウド同期が未設定です（Vercel KV を接続してください）" },
+      { error: "クラウド同期が未設定です（Upstash Redis を接続してください）" },
       { status: 503 },
     );
   }
@@ -52,7 +52,7 @@ export async function GET(request: Request) {
 export async function PUT(request: Request) {
   if (!isKvConfigured()) {
     return NextResponse.json(
-      { error: "クラウド同期が未設定です（Vercel KV を接続してください）" },
+      { error: "クラウド同期が未設定です（Upstash Redis を接続してください）" },
       { status: 503 },
     );
   }
