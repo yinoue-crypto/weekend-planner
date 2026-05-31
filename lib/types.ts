@@ -19,6 +19,82 @@ export const MOOD_LABELS: Record<Mood, string> = {
   thrill: "ワクワク",
 };
 
+/** グルメ検索時の料理ジャンル（飲食店のみに付与） */
+export type FoodCategory =
+  | "miso-katsu"
+  | "hitsumabushi"
+  | "nagoya-meshi"
+  | "ramen"
+  | "udon-soba"
+  | "sushi"
+  | "izakaya"
+  | "yakiniku"
+  | "chinese"
+  | "italian"
+  | "cafe"
+  | "sweets"
+  | "family"
+  | "curry"
+  | "hamburger"
+  | "seafood";
+
+export const FOOD_CATEGORY_LABELS: Record<FoodCategory, string> = {
+  "miso-katsu": "味噌カツ",
+  hitsumabushi: "ひつまぶし",
+  "nagoya-meshi": "きしめん・名古屋めし",
+  ramen: "ラーメン",
+  "udon-soba": "うどん・そば",
+  sushi: "寿司",
+  izakaya: "居酒屋",
+  yakiniku: "焼肉",
+  chinese: "中華",
+  italian: "イタリアン",
+  cafe: "カフェ",
+  sweets: "スイーツ",
+  family: "ファミレス",
+  curry: "カレー",
+  hamburger: "ハンバーガー",
+  seafood: "海鮮",
+};
+
+export const FOOD_CATEGORY_ORDER: FoodCategory[] = [
+  "miso-katsu",
+  "hitsumabushi",
+  "nagoya-meshi",
+  "ramen",
+  "udon-soba",
+  "sushi",
+  "yakiniku",
+  "izakaya",
+  "chinese",
+  "italian",
+  "seafood",
+  "curry",
+  "hamburger",
+  "family",
+  "cafe",
+  "sweets",
+];
+
+export const FOOD_CATEGORY_ICONS: Record<FoodCategory, string> = {
+  "miso-katsu": "🐷",
+  hitsumabushi: "🐟",
+  "nagoya-meshi": "🍜",
+  ramen: "🍥",
+  "udon-soba": "🥢",
+  sushi: "🍣",
+  izakaya: "🍶",
+  yakiniku: "🥩",
+  chinese: "🥟",
+  italian: "🍝",
+  cafe: "☕",
+  sweets: "🍰",
+  family: "🍽️",
+  curry: "🍛",
+  hamburger: "🍔",
+  seafood: "🦐",
+};
+
 export type Duration = "half" | "full";
 export type Budget = "free" | "low" | "medium" | "high";
 export type Transport = "car" | "train" | "walk";
@@ -128,6 +204,8 @@ export type Place = {
   lng: number;
   tags: PlaceTag[];
   moods: Mood[];
+  /** 飲食店のみ。グルメ検索のジャンル絞り込みに使用 */
+  foodCategories?: FoodCategory[];
   ageMin?: AgeGroup;
   ageMax?: AgeGroup;
   duration: Duration[];
@@ -137,9 +215,23 @@ export type Place = {
   source: "seed" | "favorite" | "osm";
 };
 
+export function isRestaurantPlace(place: Place): boolean {
+  return Array.isArray(place.foodCategories) && place.foodCategories.length > 0;
+}
+
+export function normalizeFoodCategories(
+  categories: FoodCategory[] | undefined,
+): FoodCategory[] {
+  if (!categories?.length) return [];
+  const valid = new Set<FoodCategory>(FOOD_CATEGORY_ORDER);
+  return [...new Set(categories.filter((c) => valid.has(c)))];
+}
+
 export type SessionChoices = {
   family: FamilyProfile;
   moods: Mood[];
+  /** グルメ選択時に必須。選んだジャンルの飲食店のみ提案 */
+  foodCategories: FoodCategory[];
   duration: Duration;
   budget: Budget;
   transport: Transport;
@@ -149,10 +241,14 @@ export type SessionChoices = {
 };
 
 export function normalizeSessionChoices(
-  choices: SessionChoices & { travelTimeRange?: TravelTimeRange },
+  choices: SessionChoices & {
+    travelTimeRange?: TravelTimeRange;
+    foodCategories?: FoodCategory[];
+  },
 ): SessionChoices {
   return {
     ...choices,
+    foodCategories: normalizeFoodCategories(choices.foodCategories),
     travelTimeRange: normalizeTravelTimeRange(choices.travelTimeRange),
   };
 }

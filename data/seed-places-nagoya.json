@@ -5,12 +5,29 @@
     "area": "中区",
     "lat": 35.1856,
     "lng": 136.8997,
-    "tags": ["outdoor", "history", "park", "view", "kids-ok", "teens-ok"],
-    "moods": ["culture", "relax"],
+    "tags": [
+      "outdoor",
+      "history",
+      "park",
+      "view",
+      "kids-ok",
+      "teens-ok"
+    ],
+    "moods": [
+      "culture",
+      "relax"
+    ],
     "ageMin": "toddler",
-    "duration": ["half", "full"],
+    "duration": [
+      "half",
+      "full"
+    ],
     "budget": "low",
-    "transport": ["car", "train", "walk"],
+    "transport": [
+      "car",
+      "train",
+      "walk"
+    ],
     "description": "金鯱で有名な名古屋のシンボル。本丸御殿と庭園散策。",
     "source": "seed"
   },
@@ -20,12 +37,29 @@
     "area": "千種区",
     "lat": 35.1545,
     "lng": 136.9762,
-    "tags": ["outdoor", "zoo", "nature", "park", "kids-ok", "stroller-ok"],
-    "moods": ["nature", "relax", "active"],
+    "tags": [
+      "outdoor",
+      "zoo",
+      "nature",
+      "park",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "nature",
+      "relax",
+      "active"
+    ],
     "ageMin": "baby",
-    "duration": ["half", "full"],
+    "duration": [
+      "half",
+      "full"
+    ],
     "budget": "low",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "コアラやゾウなど500種類。子ども連れの定番。",
     "source": "seed"
   },
@@ -35,12 +69,28 @@
     "area": "港区",
     "lat": 35.0454,
     "lng": 136.8513,
-    "tags": ["indoor", "museum", "science", "rainy-day", "kids-ok", "stroller-ok", "hands-on"],
-    "moods": ["learn", "culture"],
+    "tags": [
+      "indoor",
+      "museum",
+      "science",
+      "rainy-day",
+      "kids-ok",
+      "stroller-ok",
+      "hands-on"
+    ],
+    "moods": [
+      "learn",
+      "culture"
+    ],
     "ageMin": "toddler",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "新幹線・リニアの実車展示と運転シミュレータ。",
     "source": "seed"
   },
@@ -50,12 +100,28 @@
     "area": "西区",
     "lat": 35.1841,
     "lng": 136.8634,
-    "tags": ["indoor", "museum", "science", "rainy-day", "kids-ok", "stroller-ok", "hands-on"],
-    "moods": ["learn", "culture"],
+    "tags": [
+      "indoor",
+      "museum",
+      "science",
+      "rainy-day",
+      "kids-ok",
+      "stroller-ok",
+      "hands-on"
+    ],
+    "moods": [
+      "learn",
+      "culture"
+    ],
     "ageMin": "toddler",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "繊維機械と自動車技術の体験型展示。",
     "source": "seed"
   },
@@ -65,11 +131,25 @@
     "area": "港区",
     "lat": 35.0467,
     "lng": 136.8431,
-    "tags": ["indoor", "rainy-day", "kids-ok", "teens-ok"],
-    "moods": ["culture", "shopping"],
-    "duration": ["half", "full"],
+    "tags": [
+      "indoor",
+      "rainy-day",
+      "kids-ok",
+      "teens-ok"
+    ],
+    "moods": [
+      "culture",
+      "shopping"
+    ],
+    "duration": [
+      "half",
+      "full"
+    ],
     "budget": "medium",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "大型イベント会場。イベント開催日狙いで。",
     "source": "seed"
   },
@@ -79,12 +159,26 @@
     "area": "中区",
     "lat": 35.1599,
     "lng": 136.9019,
-    "tags": ["outdoor", "shopping", "food", "teens-ok", "adults-only"],
-    "moods": ["shopping", "food", "active"],
+    "tags": [
+      "outdoor",
+      "shopping",
+      "food",
+      "teens-ok",
+      "adults-only"
+    ],
+    "moods": [
+      "shopping",
+      "active"
+    ],
     "ageMin": "elementary",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["train", "walk"],
+    "transport": [
+      "train",
+      "walk"
+    ],
     "description": "個性派ショップとB級グルメの食べ歩き。",
     "source": "seed"
   },
@@ -94,11 +188,28 @@
     "area": "熱田区",
     "lat": 35.1278,
     "lng": 136.9082,
-    "tags": ["outdoor", "history", "nature", "park", "stroller-ok", "kids-ok", "free"],
-    "moods": ["culture", "relax", "nature"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "history",
+      "nature",
+      "park",
+      "stroller-ok",
+      "kids-ok",
+      "free"
+    ],
+    "moods": [
+      "culture",
+      "relax",
+      "nature"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "三種の神器ゆかりの古社。森の散策が気持ちいい。",
     "source": "seed"
   },
@@ -108,11 +219,28 @@
     "area": "西区",
     "lat": 35.1862,
     "lng": 136.8839,
-    "tags": ["outdoor", "park", "art", "hands-on", "kids-ok", "stroller-ok", "free"],
-    "moods": ["culture", "relax", "learn"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "park",
+      "art",
+      "hands-on",
+      "kids-ok",
+      "stroller-ok",
+      "free"
+    ],
+    "moods": [
+      "culture",
+      "relax",
+      "learn"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "陶磁器の工房見学と緑豊かな庭園。",
     "source": "seed"
   },
@@ -122,11 +250,26 @@
     "area": "中村区",
     "lat": 35.1707,
     "lng": 136.8825,
-    "tags": ["indoor", "view", "rainy-day", "shopping", "kids-ok", "teens-ok"],
-    "moods": ["relax", "shopping"],
-    "duration": ["half"],
+    "tags": [
+      "indoor",
+      "view",
+      "rainy-day",
+      "shopping",
+      "kids-ok",
+      "teens-ok"
+    ],
+    "moods": [
+      "relax",
+      "shopping"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["train", "walk"],
+    "transport": [
+      "train",
+      "walk"
+    ],
     "description": "地上220mの屋外展望。名古屋駅直結。",
     "source": "seed"
   },
@@ -136,12 +279,27 @@
     "area": "東区",
     "lat": 35.1856,
     "lng": 136.9325,
-    "tags": ["indoor", "museum", "art", "history", "rainy-day", "teens-ok"],
-    "moods": ["culture", "learn"],
+    "tags": [
+      "indoor",
+      "museum",
+      "art",
+      "history",
+      "rainy-day",
+      "teens-ok"
+    ],
+    "moods": [
+      "culture",
+      "learn"
+    ],
     "ageMin": "elementary",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "medium",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "尾張徳川家の至宝。源氏物語絵巻も。",
     "source": "seed"
   },
@@ -151,12 +309,30 @@
     "area": "昭和区",
     "lat": 35.1539,
     "lng": 136.9248,
-    "tags": ["outdoor", "park", "nature", "playground", "kids-ok", "stroller-ok", "free"],
-    "moods": ["nature", "relax", "active"],
+    "tags": [
+      "outdoor",
+      "park",
+      "nature",
+      "playground",
+      "kids-ok",
+      "stroller-ok",
+      "free"
+    ],
+    "moods": [
+      "nature",
+      "relax",
+      "active"
+    ],
     "ageMin": "baby",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car", "train", "walk"],
+    "transport": [
+      "car",
+      "train",
+      "walk"
+    ],
     "description": "桜とバラの名所。広い芝生で子どもも安心。",
     "source": "seed"
   },
@@ -166,12 +342,29 @@
     "area": "長久手市",
     "lat": 35.1819,
     "lng": 137.0789,
-    "tags": ["outdoor", "park", "nature", "playground", "kids-ok", "stroller-ok"],
-    "moods": ["nature", "active", "relax"],
+    "tags": [
+      "outdoor",
+      "park",
+      "nature",
+      "playground",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "nature",
+      "active",
+      "relax"
+    ],
     "ageMin": "toddler",
-    "duration": ["half", "full"],
+    "duration": [
+      "half",
+      "full"
+    ],
     "budget": "low",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "ジブリパーク併設の広大な公園。サツキとメイの家も。",
     "source": "seed"
   },
@@ -181,12 +374,27 @@
     "area": "長久手市",
     "lat": 35.1819,
     "lng": 137.0789,
-    "tags": ["outdoor", "indoor", "art", "kids-ok", "teens-ok"],
-    "moods": ["culture", "learn", "active"],
+    "tags": [
+      "outdoor",
+      "indoor",
+      "art",
+      "kids-ok",
+      "teens-ok"
+    ],
+    "moods": [
+      "culture",
+      "learn",
+      "active"
+    ],
     "ageMin": "toddler",
-    "duration": ["full"],
+    "duration": [
+      "full"
+    ],
     "budget": "high",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "ジブリの世界に入り込めるテーマパーク。要事前予約。",
     "source": "seed"
   },
@@ -196,13 +404,26 @@
     "area": "港区",
     "lat": 35.0469,
     "lng": 136.8487,
-    "tags": ["outdoor", "kids-ok", "hands-on"],
-    "moods": ["active", "thrill", "learn"],
+    "tags": [
+      "outdoor",
+      "kids-ok",
+      "hands-on"
+    ],
+    "moods": [
+      "active",
+      "thrill",
+      "learn"
+    ],
     "ageMin": "toddler",
     "ageMax": "elementary",
-    "duration": ["full"],
+    "duration": [
+      "full"
+    ],
     "budget": "high",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "2〜12歳ターゲットのテーマパーク。",
     "source": "seed"
   },
@@ -212,12 +433,29 @@
     "area": "港区",
     "lat": 35.0944,
     "lng": 136.8556,
-    "tags": ["indoor", "aquarium", "rainy-day", "kids-ok", "stroller-ok", "hands-on"],
-    "moods": ["nature", "learn", "relax"],
+    "tags": [
+      "indoor",
+      "aquarium",
+      "rainy-day",
+      "kids-ok",
+      "stroller-ok",
+      "hands-on"
+    ],
+    "moods": [
+      "nature",
+      "learn",
+      "relax"
+    ],
     "ageMin": "baby",
-    "duration": ["half", "full"],
+    "duration": [
+      "half",
+      "full"
+    ],
     "budget": "medium",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "シャチ・イルカ・ペンギン。雨でも楽しい王道。",
     "source": "seed"
   },
@@ -227,12 +465,27 @@
     "area": "中区",
     "lat": 35.1652,
     "lng": 136.8995,
-    "tags": ["indoor", "museum", "science", "rainy-day", "kids-ok", "hands-on"],
-    "moods": ["learn", "culture"],
+    "tags": [
+      "indoor",
+      "museum",
+      "science",
+      "rainy-day",
+      "kids-ok",
+      "hands-on"
+    ],
+    "moods": [
+      "learn",
+      "culture"
+    ],
     "ageMin": "toddler",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["train", "walk"],
+    "transport": [
+      "train",
+      "walk"
+    ],
     "description": "世界最大級のプラネタリウムと体験展示。",
     "source": "seed"
   },
@@ -242,11 +495,27 @@
     "area": "熱田区",
     "lat": 35.1306,
     "lng": 136.8919,
-    "tags": ["outdoor", "park", "nature", "stroller-ok", "kids-ok"],
-    "moods": ["relax", "nature", "culture"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "park",
+      "nature",
+      "stroller-ok",
+      "kids-ok"
+    ],
+    "moods": [
+      "relax",
+      "nature",
+      "culture"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["car", "train", "walk"],
+    "transport": [
+      "car",
+      "train",
+      "walk"
+    ],
     "description": "中部地方最大の池泉回遊式庭園。紅葉が美しい。",
     "source": "seed"
   },
@@ -254,13 +523,30 @@
     "id": "aeon-mall-nagoya-noritake",
     "name": "イオンモールNagoya Noritake Garden",
     "area": "西区",
-    "lat": 35.1820,
+    "lat": 35.182,
     "lng": 136.8807,
-    "tags": ["indoor", "mall", "shopping", "food", "rainy-day", "kids-ok", "stroller-ok"],
-    "moods": ["shopping", "food", "relax"],
-    "duration": ["half", "full"],
+    "tags": [
+      "indoor",
+      "mall",
+      "shopping",
+      "food",
+      "rainy-day",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "shopping",
+      "relax"
+    ],
+    "duration": [
+      "half",
+      "full"
+    ],
     "budget": "medium",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "雨の日の鉄板。フードコートも広い。",
     "source": "seed"
   },
@@ -270,11 +556,26 @@
     "area": "東区",
     "lat": 35.1875,
     "lng": 136.9484,
-    "tags": ["indoor", "mall", "shopping", "food", "rainy-day", "kids-ok", "stroller-ok"],
-    "moods": ["shopping", "food"],
-    "duration": ["half"],
+    "tags": [
+      "indoor",
+      "mall",
+      "shopping",
+      "food",
+      "rainy-day",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "shopping"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "medium",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "バンダイナムコクロスストアなど子ども向け施設も充実。",
     "source": "seed"
   },
@@ -284,11 +585,27 @@
     "area": "港区",
     "lat": 35.0903,
     "lng": 136.8636,
-    "tags": ["indoor", "mall", "shopping", "food", "rainy-day", "kids-ok", "stroller-ok"],
-    "moods": ["shopping", "food"],
-    "duration": ["half", "full"],
+    "tags": [
+      "indoor",
+      "mall",
+      "shopping",
+      "food",
+      "rainy-day",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "shopping"
+    ],
+    "duration": [
+      "half",
+      "full"
+    ],
     "budget": "medium",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "屋内アスレチック「PuChi」あり。",
     "source": "seed"
   },
@@ -298,12 +615,30 @@
     "area": "北区",
     "lat": 35.1898,
     "lng": 136.9023,
-    "tags": ["outdoor", "park", "nature", "playground", "kids-ok", "stroller-ok", "free"],
-    "moods": ["nature", "active", "relax"],
+    "tags": [
+      "outdoor",
+      "park",
+      "nature",
+      "playground",
+      "kids-ok",
+      "stroller-ok",
+      "free"
+    ],
+    "moods": [
+      "nature",
+      "active",
+      "relax"
+    ],
     "ageMin": "baby",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car", "train", "walk"],
+    "transport": [
+      "car",
+      "train",
+      "walk"
+    ],
     "description": "名古屋城北側の広大な公園。ランニングコース。",
     "source": "seed"
   },
@@ -313,11 +648,26 @@
     "area": "守山区",
     "lat": 35.2575,
     "lng": 137.0411,
-    "tags": ["outdoor", "park", "nature", "kids-ok", "stroller-ok", "free"],
-    "moods": ["nature", "relax", "learn"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "park",
+      "nature",
+      "kids-ok",
+      "stroller-ok",
+      "free"
+    ],
+    "moods": [
+      "nature",
+      "relax",
+      "learn"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "果樹園と日本庭園。シダレザクラの名所。",
     "source": "seed"
   },
@@ -327,11 +677,27 @@
     "area": "東区",
     "lat": 35.1721,
     "lng": 136.9085,
-    "tags": ["outdoor", "indoor", "shopping", "food", "view", "free", "kids-ok"],
-    "moods": ["shopping", "relax", "food"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "indoor",
+      "shopping",
+      "food",
+      "view",
+      "free",
+      "kids-ok"
+    ],
+    "moods": [
+      "shopping",
+      "relax"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["train", "walk"],
+    "transport": [
+      "train",
+      "walk"
+    ],
     "description": "水の宇宙船と地下街。栄駅直結。",
     "source": "seed"
   },
@@ -341,11 +707,27 @@
     "area": "中区",
     "lat": 35.1707,
     "lng": 136.9094,
-    "tags": ["outdoor", "park", "shopping", "food", "stroller-ok", "kids-ok", "free"],
-    "moods": ["relax", "shopping", "food"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "park",
+      "shopping",
+      "food",
+      "stroller-ok",
+      "kids-ok",
+      "free"
+    ],
+    "moods": [
+      "relax",
+      "shopping"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["train", "walk"],
+    "transport": [
+      "train",
+      "walk"
+    ],
     "description": "リニューアルされた都心の公園。芝生とおしゃれ店舗。",
     "source": "seed"
   },
@@ -355,11 +737,26 @@
     "area": "千種区",
     "lat": 35.1696,
     "lng": 136.9457,
-    "tags": ["outdoor", "history", "food", "cafe", "free", "stroller-ok"],
-    "moods": ["culture", "food", "relax"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "history",
+      "food",
+      "cafe",
+      "free",
+      "stroller-ok"
+    ],
+    "moods": [
+      "culture",
+      "relax"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["train", "walk"],
+    "transport": [
+      "train",
+      "walk"
+    ],
     "description": "おしゃれカフェと寺院散策。21日は縁日。",
     "source": "seed"
   },
@@ -369,12 +766,25 @@
     "area": "緑区",
     "lat": 35.0653,
     "lng": 136.9678,
-    "tags": ["outdoor", "history", "kids-ok"],
-    "moods": ["culture", "relax"],
+    "tags": [
+      "outdoor",
+      "history",
+      "kids-ok"
+    ],
+    "moods": [
+      "culture",
+      "relax"
+    ],
     "ageMin": "elementary",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car", "train", "walk"],
+    "transport": [
+      "car",
+      "train",
+      "walk"
+    ],
     "description": "絞り染めで有名な江戸期の街道集落。",
     "source": "seed"
   },
@@ -384,12 +794,27 @@
     "area": "犬山市",
     "lat": 35.3886,
     "lng": 136.9396,
-    "tags": ["outdoor", "history", "view", "kids-ok"],
-    "moods": ["culture", "active"],
+    "tags": [
+      "outdoor",
+      "history",
+      "view",
+      "kids-ok"
+    ],
+    "moods": [
+      "culture",
+      "active"
+    ],
     "ageMin": "elementary",
-    "duration": ["half", "full"],
+    "duration": [
+      "half",
+      "full"
+    ],
     "budget": "low",
-    "transport": ["car", "train", "walk"],
+    "transport": [
+      "car",
+      "train",
+      "walk"
+    ],
     "description": "現存12天守の国宝。城下町散策と合わせて。",
     "source": "seed"
   },
@@ -399,12 +824,26 @@
     "area": "犬山市",
     "lat": 35.4148,
     "lng": 137.0292,
-    "tags": ["outdoor", "museum", "history", "kids-ok", "hands-on"],
-    "moods": ["culture", "learn", "active"],
+    "tags": [
+      "outdoor",
+      "museum",
+      "history",
+      "kids-ok",
+      "hands-on"
+    ],
+    "moods": [
+      "culture",
+      "learn",
+      "active"
+    ],
     "ageMin": "elementary",
-    "duration": ["full"],
+    "duration": [
+      "full"
+    ],
     "budget": "medium",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "明治時代の建造物を移築。蒸気機関車も走る。",
     "source": "seed"
   },
@@ -413,13 +852,25 @@
     "name": "リトルワールド",
     "area": "犬山市",
     "lat": 35.3877,
-    "lng": 136.9970,
-    "tags": ["outdoor", "museum", "hands-on", "kids-ok"],
-    "moods": ["culture", "learn", "food"],
+    "lng": 136.997,
+    "tags": [
+      "outdoor",
+      "museum",
+      "hands-on",
+      "kids-ok"
+    ],
+    "moods": [
+      "culture",
+      "learn"
+    ],
     "ageMin": "toddler",
-    "duration": ["full"],
+    "duration": [
+      "full"
+    ],
     "budget": "medium",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "世界の民家と民族衣装体験。各国グルメも。",
     "source": "seed"
   },
@@ -429,11 +880,28 @@
     "area": "岡崎市",
     "lat": 34.9572,
     "lng": 137.1576,
-    "tags": ["outdoor", "park", "history", "kids-ok", "stroller-ok", "free"],
-    "moods": ["culture", "nature", "relax"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "park",
+      "history",
+      "kids-ok",
+      "stroller-ok",
+      "free"
+    ],
+    "moods": [
+      "culture",
+      "nature",
+      "relax"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["car", "train", "walk"],
+    "transport": [
+      "car",
+      "train",
+      "walk"
+    ],
     "description": "徳川家康生誕の城と桜の名所。",
     "source": "seed"
   },
@@ -443,11 +911,24 @@
     "area": "豊田市",
     "lat": 35.1547,
     "lng": 137.3033,
-    "tags": ["outdoor", "nature", "view", "kids-ok"],
-    "moods": ["nature", "relax"],
-    "duration": ["half", "full"],
+    "tags": [
+      "outdoor",
+      "nature",
+      "view",
+      "kids-ok"
+    ],
+    "moods": [
+      "nature",
+      "relax"
+    ],
+    "duration": [
+      "half",
+      "full"
+    ],
     "budget": "free",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "東海一の紅葉名所。新緑期も美しい。",
     "source": "seed"
   },
@@ -457,12 +938,27 @@
     "area": "豊田市",
     "lat": 35.0832,
     "lng": 137.1572,
-    "tags": ["indoor", "museum", "science", "rainy-day", "kids-ok", "hands-on", "free"],
-    "moods": ["learn", "culture"],
+    "tags": [
+      "indoor",
+      "museum",
+      "science",
+      "rainy-day",
+      "kids-ok",
+      "hands-on",
+      "free"
+    ],
+    "moods": [
+      "learn",
+      "culture"
+    ],
     "ageMin": "elementary",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "トヨタの最新技術を体験。工場見学も予約可。",
     "source": "seed"
   },
@@ -472,12 +968,23 @@
     "area": "恵那市",
     "lat": 35.4756,
     "lng": 137.4486,
-    "tags": ["outdoor", "nature", "view"],
-    "moods": ["nature", "relax"],
+    "tags": [
+      "outdoor",
+      "nature",
+      "view"
+    ],
+    "moods": [
+      "nature",
+      "relax"
+    ],
     "ageMin": "elementary",
-    "duration": ["full"],
+    "duration": [
+      "full"
+    ],
     "budget": "medium",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "ダム湖の遊覧船と奇岩。さざなみ広場で散策。",
     "source": "seed"
   },
@@ -487,12 +994,23 @@
     "area": "中津川市",
     "lat": 35.5278,
     "lng": 137.5586,
-    "tags": ["outdoor", "history", "kids-ok"],
-    "moods": ["culture", "active"],
+    "tags": [
+      "outdoor",
+      "history",
+      "kids-ok"
+    ],
+    "moods": [
+      "culture",
+      "active"
+    ],
     "ageMin": "elementary",
-    "duration": ["full"],
+    "duration": [
+      "full"
+    ],
     "budget": "low",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "中山道の宿場町。石畳の坂道散策。",
     "source": "seed"
   },
@@ -500,14 +1018,26 @@
     "id": "gero-onsen",
     "name": "下呂温泉 噴泉池",
     "area": "下呂市",
-    "lat": 33.7910,
+    "lat": 33.791,
     "lng": 137.2444,
-    "tags": ["outdoor", "onsen", "view"],
-    "moods": ["relax", "culture"],
+    "tags": [
+      "outdoor",
+      "onsen",
+      "view"
+    ],
+    "moods": [
+      "relax",
+      "culture"
+    ],
     "ageMin": "elementary",
-    "duration": ["full"],
+    "duration": [
+      "full"
+    ],
     "budget": "medium",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "日本三名泉。日帰り入浴施設も多数。",
     "source": "seed"
   },
@@ -517,11 +1047,26 @@
     "area": "伊勢市",
     "lat": 34.4549,
     "lng": 136.7256,
-    "tags": ["outdoor", "history", "nature", "kids-ok", "stroller-ok"],
-    "moods": ["culture", "relax", "nature"],
-    "duration": ["full"],
+    "tags": [
+      "outdoor",
+      "history",
+      "nature",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "culture",
+      "relax",
+      "nature"
+    ],
+    "duration": [
+      "full"
+    ],
     "budget": "free",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "神聖な森の参道。おかげ横丁で食べ歩き。",
     "source": "seed"
   },
@@ -531,11 +1076,25 @@
     "area": "桑名市",
     "lat": 35.0859,
     "lng": 136.6736,
-    "tags": ["outdoor", "nature", "view", "kids-ok", "stroller-ok"],
-    "moods": ["nature", "relax"],
-    "duration": ["half", "full"],
+    "tags": [
+      "outdoor",
+      "nature",
+      "view",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "nature",
+      "relax"
+    ],
+    "duration": [
+      "half",
+      "full"
+    ],
     "budget": "medium",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "国内最大級のイルミネーションと花畑。",
     "source": "seed"
   },
@@ -545,12 +1104,23 @@
     "area": "桑名市",
     "lat": 35.0288,
     "lng": 136.7311,
-    "tags": ["outdoor", "kids-ok", "teens-ok"],
-    "moods": ["thrill", "active"],
+    "tags": [
+      "outdoor",
+      "kids-ok",
+      "teens-ok"
+    ],
+    "moods": [
+      "thrill",
+      "active"
+    ],
     "ageMin": "elementary",
-    "duration": ["full"],
+    "duration": [
+      "full"
+    ],
     "budget": "high",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "絶叫マシンとジャンボ海水プール、温泉も併設。",
     "source": "seed"
   },
@@ -560,13 +1130,28 @@
     "area": "中川区",
     "lat": 35.1697,
     "lng": 136.8442,
-    "tags": ["indoor", "outdoor", "rainy-day", "kids-ok", "stroller-ok", "hands-on"],
-    "moods": ["active", "learn"],
+    "tags": [
+      "indoor",
+      "outdoor",
+      "rainy-day",
+      "kids-ok",
+      "stroller-ok",
+      "hands-on"
+    ],
+    "moods": [
+      "active",
+      "learn"
+    ],
     "ageMin": "baby",
     "ageMax": "elementary",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "high",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "0〜小学校低学年向け。屋外と屋内の融合施設。",
     "source": "seed"
   },
@@ -576,12 +1161,24 @@
     "area": "豊田市",
     "lat": 35.1135,
     "lng": 137.1568,
-    "tags": ["indoor", "museum", "rainy-day", "kids-ok"],
-    "moods": ["culture", "learn"],
+    "tags": [
+      "indoor",
+      "museum",
+      "rainy-day",
+      "kids-ok"
+    ],
+    "moods": [
+      "culture",
+      "learn"
+    ],
     "ageMin": "elementary",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "豊田市美術館の企画展もチェック。",
     "source": "seed"
   },
@@ -591,12 +1188,26 @@
     "area": "豊田市",
     "lat": 35.0801,
     "lng": 137.1502,
-    "tags": ["indoor", "art", "museum", "rainy-day", "teens-ok"],
-    "moods": ["culture", "relax"],
+    "tags": [
+      "indoor",
+      "art",
+      "museum",
+      "rainy-day",
+      "teens-ok"
+    ],
+    "moods": [
+      "culture",
+      "relax"
+    ],
     "ageMin": "elementary",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "現代美術の名コレクション。建築も見もの。",
     "source": "seed"
   },
@@ -606,12 +1217,27 @@
     "area": "常滑市",
     "lat": 34.8836,
     "lng": 136.8463,
-    "tags": ["outdoor", "history", "art", "kids-ok"],
-    "moods": ["culture", "active", "relax"],
+    "tags": [
+      "outdoor",
+      "history",
+      "art",
+      "kids-ok"
+    ],
+    "moods": [
+      "culture",
+      "active",
+      "relax"
+    ],
     "ageMin": "elementary",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car", "train", "walk"],
+    "transport": [
+      "car",
+      "train",
+      "walk"
+    ],
     "description": "焼き物の町を歩く。陶芸体験も可能。",
     "source": "seed"
   },
@@ -621,11 +1247,28 @@
     "area": "常滑市",
     "lat": 34.8616,
     "lng": 136.8155,
-    "tags": ["outdoor", "view", "shopping", "food", "kids-ok", "stroller-ok", "free"],
-    "moods": ["relax", "active", "shopping"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "view",
+      "shopping",
+      "food",
+      "kids-ok",
+      "stroller-ok",
+      "free"
+    ],
+    "moods": [
+      "relax",
+      "active",
+      "shopping"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "離発着が間近で見える展望デッキ。FLIGHT OF DREAMSも。",
     "source": "seed"
   },
@@ -635,12 +1278,26 @@
     "area": "岡崎市",
     "lat": 34.9242,
     "lng": 137.1815,
-    "tags": ["outdoor", "park", "playground", "kids-ok", "stroller-ok", "free"],
-    "moods": ["active", "nature"],
+    "tags": [
+      "outdoor",
+      "park",
+      "playground",
+      "kids-ok",
+      "stroller-ok",
+      "free"
+    ],
+    "moods": [
+      "active",
+      "nature"
+    ],
     "ageMin": "toddler",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "ミニ遊園地、プール、観覧車もある総合公園。",
     "source": "seed"
   },
@@ -650,12 +1307,28 @@
     "area": "刈谷市",
     "lat": 35.0203,
     "lng": 137.0006,
-    "tags": ["outdoor", "indoor", "shopping", "food", "playground", "kids-ok", "stroller-ok", "free"],
-    "moods": ["active", "food", "shopping"],
+    "tags": [
+      "outdoor",
+      "indoor",
+      "shopping",
+      "food",
+      "playground",
+      "kids-ok",
+      "stroller-ok",
+      "free"
+    ],
+    "moods": [
+      "active",
+      "shopping"
+    ],
     "ageMin": "toddler",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "全国SAランキング上位の常連。観覧車・温泉あり。",
     "source": "seed"
   },
@@ -665,12 +1338,26 @@
     "area": "長久手市",
     "lat": 35.1853,
     "lng": 137.0789,
-    "tags": ["indoor", "kids-ok", "stroller-ok", "rainy-day", "free"],
-    "moods": ["relax", "learn"],
+    "tags": [
+      "indoor",
+      "kids-ok",
+      "stroller-ok",
+      "rainy-day",
+      "free"
+    ],
+    "moods": [
+      "relax",
+      "learn"
+    ],
     "ageMin": "baby",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car", "train"],
+    "transport": [
+      "car",
+      "train"
+    ],
     "description": "親子で過ごせる無料施設。雨の日の休憩にも。",
     "source": "seed"
   },
@@ -680,11 +1367,27 @@
     "area": "岩倉市",
     "lat": 35.2864,
     "lng": 136.8722,
-    "tags": ["outdoor", "nature", "view", "free", "kids-ok", "stroller-ok"],
-    "moods": ["nature", "relax"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "nature",
+      "view",
+      "free",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "nature",
+      "relax"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car", "train", "walk"],
+    "transport": [
+      "car",
+      "train",
+      "walk"
+    ],
     "description": "春は桜並木、夏は鯉のぼり。季節の風景が楽しめる。",
     "source": "seed"
   },
@@ -694,11 +1397,24 @@
     "area": "昭和区",
     "lat": 35.1352,
     "lng": 136.9617,
-    "tags": ["outdoor", "history", "free", "stroller-ok"],
-    "moods": ["culture", "relax"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "history",
+      "free",
+      "stroller-ok"
+    ],
+    "moods": [
+      "culture",
+      "relax"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["train", "walk"],
+    "transport": [
+      "train",
+      "walk"
+    ],
     "description": "五重塔と毎月縁日。八事の街歩きと合わせて。",
     "source": "seed"
   },
@@ -708,12 +1424,26 @@
     "area": "中区",
     "lat": 35.1647,
     "lng": 136.8979,
-    "tags": ["indoor", "art", "museum", "rainy-day", "teens-ok"],
-    "moods": ["culture", "relax"],
+    "tags": [
+      "indoor",
+      "art",
+      "museum",
+      "rainy-day",
+      "teens-ok"
+    ],
+    "moods": [
+      "culture",
+      "relax"
+    ],
     "ageMin": "elementary",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["train", "walk"],
+    "transport": [
+      "train",
+      "walk"
+    ],
     "description": "メキシコ・ルネサンス、エコール・ド・パリ等。",
     "source": "seed"
   },
@@ -723,11 +1453,23 @@
     "area": "中区",
     "lat": 35.1432,
     "lng": 136.9008,
-    "tags": ["indoor", "shopping", "food", "rainy-day"],
-    "moods": ["shopping", "food"],
-    "duration": ["half"],
+    "tags": [
+      "indoor",
+      "shopping",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "shopping"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["train", "walk"],
+    "transport": [
+      "train",
+      "walk"
+    ],
     "description": "金山駅周辺でショッピング・カフェ巡り。",
     "source": "seed"
   },
@@ -737,12 +1479,28 @@
     "area": "港区",
     "lat": 35.1217,
     "lng": 136.8175,
-    "tags": ["outdoor", "park", "playground", "nature", "kids-ok", "stroller-ok", "free"],
-    "moods": ["nature", "active", "relax"],
+    "tags": [
+      "outdoor",
+      "park",
+      "playground",
+      "nature",
+      "kids-ok",
+      "stroller-ok",
+      "free"
+    ],
+    "moods": [
+      "nature",
+      "active",
+      "relax"
+    ],
     "ageMin": "toddler",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "free",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "巨大遊具と農業科学館。BBQも可能。",
     "source": "seed"
   },
@@ -752,12 +1510,23 @@
     "area": "守山区",
     "lat": 35.2469,
     "lng": 137.0078,
-    "tags": ["indoor", "onsen", "rainy-day", "kids-ok"],
-    "moods": ["relax"],
+    "tags": [
+      "indoor",
+      "onsen",
+      "rainy-day",
+      "kids-ok"
+    ],
+    "moods": [
+      "relax"
+    ],
     "ageMin": "toddler",
-    "duration": ["half"],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["car"],
+    "transport": [
+      "car"
+    ],
     "description": "スーパー銭湯。岩盤浴と食事処も。",
     "source": "seed"
   },
@@ -767,12 +1536,885 @@
     "area": "港区",
     "lat": 35.0467,
     "lng": 136.8503,
-    "tags": ["outdoor", "shopping", "food", "kids-ok", "stroller-ok", "free"],
-    "moods": ["shopping", "food", "relax"],
-    "duration": ["half"],
+    "tags": [
+      "outdoor",
+      "shopping",
+      "food",
+      "kids-ok",
+      "stroller-ok",
+      "free"
+    ],
+    "moods": [
+      "shopping",
+      "relax"
+    ],
+    "duration": [
+      "half"
+    ],
     "budget": "low",
-    "transport": ["car", "train", "walk"],
+    "transport": [
+      "car",
+      "train",
+      "walk"
+    ],
     "description": "レゴランド隣接の体験・グルメ施設。",
+    "source": "seed"
+  },
+  {
+    "id": "yabaton-honten",
+    "name": "矢場とん 本店",
+    "area": "中区",
+    "lat": 35.1682,
+    "lng": 136.9061,
+    "tags": [
+      "indoor",
+      "food",
+      "kids-ok",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "miso-katsu"
+    ],
+    "ageMin": "toddler",
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "car",
+      "train",
+      "walk"
+    ],
+    "description": "名古屋名物味噌カツの名店。鉄板とんかつが看板。",
+    "source": "seed"
+  },
+  {
+    "id": "misokatsu-yabaton-sakae",
+    "name": "味噌カツ 矢場とん 栄店",
+    "area": "中区",
+    "lat": 35.1675,
+    "lng": 136.9078,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "kids-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "miso-katsu"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "栄エリアで味噌カツ。観光の合間に立ち寄りやすい。",
+    "source": "seed"
+  },
+  {
+    "id": "yamachaya-misokatsu",
+    "name": "山ちゃん 本店",
+    "area": "中区",
+    "lat": 35.1698,
+    "lng": 136.9089,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "miso-katsu"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "矢場とんと並ぶ味噌カツの老舗。秘伝味噌ダレが特徴。",
+    "source": "seed"
+  },
+  {
+    "id": "atsuta-horai-honten",
+    "name": "あつた蓬莱軒 本店",
+    "area": "熱田区",
+    "lat": 35.1208,
+    "lng": 136.9142,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "kids-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "hitsumabushi",
+      "nagoya-meshi"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "medium",
+    "transport": [
+      "car",
+      "train"
+    ],
+    "description": "ひつまぶし発祥の店。三食の食べ方を楽しめる。",
+    "source": "seed"
+  },
+  {
+    "id": "seiyama-hitsumabushi",
+    "name": "ひつまぶし 名古屋 世山",
+    "area": "中区",
+    "lat": 35.1701,
+    "lng": 136.9012,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "hitsumabushi"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "medium",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "名古屋駅近くで本格ひつまぶし。ざる盛りが人気。",
+    "source": "seed"
+  },
+  {
+    "id": "ajisen-ramen",
+    "name": "味仙 本店",
+    "area": "中川区",
+    "lat": 35.1321,
+    "lng": 136.8234,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "ramen",
+      "nagoya-meshi"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "car",
+      "train"
+    ],
+    "description": "台湾ラーメン発祥の店。辛味とニンニクが効いた一杯。",
+    "source": "seed"
+  },
+  {
+    "id": "ebi-bura-ramen",
+    "name": "えびせん 魏ぶら",
+    "area": "中区",
+    "lat": 35.1612,
+    "lng": 136.8998,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "ramen"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "えびトッピングの濃厚ラーメン。夜遅くまで営業。",
+    "source": "seed"
+  },
+  {
+    "id": "shachihoko-gyoza",
+    "name": "しゃちほこ餃子 名古屋栄本店",
+    "area": "中区",
+    "lat": 35.1668,
+    "lng": 136.9055,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "kids-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "chinese"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "焼餃子と中華料理。家族でシェアしやすいメニュー。",
+    "source": "seed"
+  },
+  {
+    "id": "komeda-honten",
+    "name": "コメダ珈琲店 本店",
+    "area": "瑞穂区",
+    "lat": 35.1339,
+    "lng": 136.9342,
+    "tags": [
+      "indoor",
+      "food",
+      "cafe",
+      "rainy-day",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "food",
+      "relax"
+    ],
+    "foodCategories": [
+      "cafe",
+      "nagoya-meshi"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "car",
+      "train"
+    ],
+    "description": "シロノワール発祥。モーニングと名古屋喫茶文化。",
+    "source": "seed"
+  },
+  {
+    "id": "kissa-mountain",
+    "name": "喫茶マウンテン",
+    "area": "中区",
+    "lat": 35.1689,
+    "lng": 136.8842,
+    "tags": [
+      "indoor",
+      "food",
+      "cafe",
+      "rainy-day"
+    ],
+    "moods": [
+      "food",
+      "relax"
+    ],
+    "foodCategories": [
+      "cafe"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "名物ナポリタンとふわふわトーストの老舗喫茶。",
+    "source": "seed"
+  },
+  {
+    "id": "shogetsu-kishimen",
+    "name": "松月庵",
+    "area": "中区",
+    "lat": 35.1705,
+    "lng": 136.9088,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "kids-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "nagoya-meshi",
+      "udon-soba"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "平打ちのきしめん専門店。あっさり出汁が名物。",
+    "source": "seed"
+  },
+  {
+    "id": "yamamotoya-honten",
+    "name": "山本屋総本家",
+    "area": "中区",
+    "lat": 35.1692,
+    "lng": 136.9071,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "nagoya-meshi"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "medium",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "味噌煮込みうどん・どて煮の名古屋めし老舗。",
+    "source": "seed"
+  },
+  {
+    "id": "marukyu-izakaya",
+    "name": "まるきゅう",
+    "area": "中区",
+    "lat": 35.1648,
+    "lng": 136.9032,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "adults-only"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "izakaya",
+      "seafood"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "medium",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "地魚と日本酒が揃う居酒屋。名古屋港直送の刺身も。",
+    "source": "seed"
+  },
+  {
+    "id": "mikawa-ichiba-sushi",
+    "name": "三河一色マルシェ 寿司コーナー",
+    "area": "港区",
+    "lat": 35.0892,
+    "lng": 136.8821,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "sushi",
+      "seafood"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "medium",
+    "transport": [
+      "car",
+      "train"
+    ],
+    "description": "新鮮な三河湾の魚を使った寿司・海鮮丼。",
+    "source": "seed"
+  },
+  {
+    "id": "sushiro-nagoya",
+    "name": "スシロー 名古屋駅前店",
+    "area": "中区",
+    "lat": 35.1712,
+    "lng": 136.8818,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "sushi"
+    ],
+    "ageMin": "toddler",
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "回転寿司。子ども連れでも気軽に楽しめる。",
+    "source": "seed"
+  },
+  {
+    "id": "migiwa-tei-yakiniku",
+    "name": "みぎわ亭",
+    "area": "名古屋市",
+    "lat": 35.1588,
+    "lng": 136.9124,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "kids-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "yakiniku"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "medium",
+    "transport": [
+      "car",
+      "train"
+    ],
+    "description": "国産和牛を炭火で。家族向け個室もあり。",
+    "source": "seed"
+  },
+  {
+    "id": "rikuro-yakiniku",
+    "name": "焼肉 力久",
+    "area": "西区",
+    "lat": 35.1892,
+    "lng": 136.8512,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "yakiniku"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "medium",
+    "transport": [
+      "car",
+      "train"
+    ],
+    "description": "厚切りタンとハラミが人気の焼肉店。",
+    "source": "seed"
+  },
+  {
+    "id": "bamiyan-sakae",
+    "name": "バーミヤン 栄店",
+    "area": "中区",
+    "lat": 35.1655,
+    "lng": 136.9068,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "family",
+      "chinese"
+    ],
+    "ageMin": "baby",
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "中華ファミレス。子どもメニューと円卓席が充実。",
+    "source": "seed"
+  },
+  {
+    "id": "gusto-kanayama",
+    "name": "ガスト 金山店",
+    "area": "中区",
+    "lat": 35.1435,
+    "lng": 136.9005,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "kids-ok",
+      "stroller-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "family"
+    ],
+    "ageMin": "baby",
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "ファミレス定番。パンケーキとバラエティメニュー。",
+    "source": "seed"
+  },
+  {
+    "id": "domdom-hamburger",
+    "name": "ドムドムハンバーガー 大須本店",
+    "area": "中区",
+    "lat": 35.1598,
+    "lng": 136.9042,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "kids-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "hamburger"
+    ],
+    "ageMin": "toddler",
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "名古屋発祥のハンバーガーチェーン本店。",
+    "source": "seed"
+  },
+  {
+    "id": "cochin-curry",
+    "name": "CoCo壱番屋 本社直営店",
+    "area": "港区",
+    "lat": 35.0458,
+    "lng": 136.8521,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "kids-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "curry",
+      "nagoya-meshi"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "car",
+      "train"
+    ],
+    "description": "カレーチェーン発祥の地。辛さとトッピングを自由に。",
+    "source": "seed"
+  },
+  {
+    "id": "trattoria-bacco",
+    "name": "オステリア・バッコ",
+    "area": "中区",
+    "lat": 35.1622,
+    "lng": 136.8988,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "italian"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "medium",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "窯焼きピザとパスタの本格イタリアン。",
+    "source": "seed"
+  },
+  {
+    "id": "antica-osteria",
+    "name": "トンキ",
+    "area": "中区",
+    "lat": 35.1718,
+    "lng": 136.9095,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "italian"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "medium",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "名古屋で愛される老舗イタリアン。肉料理も充実。",
+    "source": "seed"
+  },
+  {
+    "id": "patisserie-potager",
+    "name": "パティスリー ポタジエ",
+    "area": "東区",
+    "lat": 35.1788,
+    "lng": 136.9288,
+    "tags": [
+      "indoor",
+      "food",
+      "cafe",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "sweets",
+      "cafe"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "medium",
+    "transport": [
+      "car",
+      "train"
+    ],
+    "description": "野菜を使ったケーキが人気のスイーツ店。",
+    "source": "seed"
+  },
+  {
+    "id": "chirolo-sweets",
+    "name": "チロル 本店",
+    "area": "中区",
+    "lat": 35.1672,
+    "lng": 136.9025,
+    "tags": [
+      "indoor",
+      "food",
+      "cafe",
+      "rainy-day",
+      "kids-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "sweets",
+      "cafe"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "チロルチョコで有名。カフェと土産スイーツ。",
+    "source": "seed"
+  },
+  {
+    "id": "wakaba-teishoku",
+    "name": "若葉食堂",
+    "area": "北区",
+    "lat": 35.1942,
+    "lng": 136.9218,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "kids-ok"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "udon-soba"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "大きな天ぷらとうどんの庶民派食堂。",
+    "source": "seed"
+  },
+  {
+    "id": "uogashi-sushi",
+    "name": "魚がし日本一 名古屋栄",
+    "area": "中区",
+    "lat": 35.1662,
+    "lng": 136.9048,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "sushi",
+      "seafood"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "medium",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "立ち食い寿司。新鮮なネタをリーズナブルに。",
+    "source": "seed"
+  },
+  {
+    "id": "tebasaki-yamachan",
+    "name": "世界の山ちゃん 本店",
+    "area": "中区",
+    "lat": 35.1695,
+    "lng": 136.9058,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day",
+      "adults-only"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "izakaya",
+      "nagoya-meshi"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "手羽先の名店。辛くてビールが進む名古屋名物。",
+    "source": "seed"
+  },
+  {
+    "id": "kineya-miso-nikomi",
+    "name": "きねや 名古屋本店",
+    "area": "中区",
+    "lat": 35.1685,
+    "lng": 136.9038,
+    "tags": [
+      "indoor",
+      "food",
+      "rainy-day"
+    ],
+    "moods": [
+      "food"
+    ],
+    "foodCategories": [
+      "nagoya-meshi",
+      "udon-soba"
+    ],
+    "duration": [
+      "half"
+    ],
+    "budget": "low",
+    "transport": [
+      "train",
+      "walk"
+    ],
+    "description": "味噌煮込みうどんの専門店。土鍋で熱々を提供。",
     "source": "seed"
   }
 ]

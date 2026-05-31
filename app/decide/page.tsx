@@ -20,6 +20,7 @@ import type {
   Budget,
   Duration,
   FamilyProfile,
+  FoodCategory,
   HomeBase,
   Mood,
   SessionChoices,
@@ -27,7 +28,11 @@ import type {
   TravelTimeRange,
   WeatherSnapshot,
 } from "@/lib/types";
-import { DEFAULT_TRAVEL_TIME_RANGE, normalizeTravelTimeRange } from "@/lib/types";
+import {
+  DEFAULT_TRAVEL_TIME_RANGE,
+  normalizeFoodCategories,
+  normalizeTravelTimeRange,
+} from "@/lib/types";
 
 const TOTAL_STEPS = 4;
 
@@ -37,6 +42,7 @@ export default function DecidePage() {
   const [family, setFamily] = useState<FamilyProfile>(DEFAULT_FAMILY);
   const [home, setHome] = useState<HomeBase>(NAGOYA_DEFAULT);
   const [moods, setMoods] = useState<Mood[]>([]);
+  const [foodCategories, setFoodCategories] = useState<FoodCategory[]>([]);
   const [duration, setDuration] = useState<Duration>("half");
   const [budget, setBudget] = useState<Budget>("low");
   const [transport, setTransport] = useState<Transport>("car");
@@ -56,16 +62,21 @@ export default function DecidePage() {
     if (last?.choices?.transport) {
       setTransport(last.choices.transport);
     }
+    if (last?.choices?.foodCategories?.length) {
+      setFoodCategories(normalizeFoodCategories(last.choices.foodCategories));
+    }
   }, []);
 
   const familyValid = family.members.length > 0;
   const moodsValid = moods.length > 0;
+  const foodCategoriesValid =
+    !moods.includes("food") || foodCategories.length > 0;
 
   const nextDisabled = useMemo(() => {
     if (step === 1) return !familyValid;
-    if (step === 2) return !moodsValid;
+    if (step === 2) return !moodsValid || !foodCategoriesValid;
     return false;
-  }, [step, familyValid, moodsValid]);
+  }, [step, familyValid, moodsValid, foodCategoriesValid]);
 
   function goNext() {
     if (step < TOTAL_STEPS) {
@@ -76,6 +87,7 @@ export default function DecidePage() {
     const session: SessionChoices = {
       family,
       moods,
+      foodCategories: normalizeFoodCategories(foodCategories),
       duration,
       budget,
       transport,
@@ -110,12 +122,21 @@ export default function DecidePage() {
           step={2}
           total={TOTAL_STEPS}
           title="どんな気分？"
-          subtitle="複数選べます（最低1つ）"
+          subtitle={
+            moods.includes("food")
+              ? "気分と、グルメなら食べたいジャンルを選んでください"
+              : "複数選べます（最低1つ）"
+          }
           onBack={goBack}
           onNext={goNext}
           nextDisabled={nextDisabled}
         >
-          <MoodStep selected={moods} onChange={setMoods} />
+          <MoodStep
+            selected={moods}
+            foodCategories={foodCategories}
+            onChange={setMoods}
+            onFoodCategoriesChange={setFoodCategories}
+          />
         </StepShell>
       )}
 
