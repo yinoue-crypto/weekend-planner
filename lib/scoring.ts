@@ -1,5 +1,7 @@
 import { distanceKm, estimateTravelMinutes, formatTravelMinutes } from "./distance";
+import { placeMatchesFoodCategories, sessionWantsFood } from "./food";
 import { getUniqueVisits } from "./visits";
+import { FOOD_CATEGORY_LABELS } from "./types";
 import type {
   AgeGroup,
   FamilyProfile,
@@ -101,6 +103,12 @@ function passesHardFilter(
     return false;
   }
 
+  if (sessionWantsFood(choices)) {
+    if (!placeMatchesFoodCategories(place, choices.foodCategories)) {
+      return false;
+    }
+  }
+
   return true;
 }
 
@@ -117,6 +125,17 @@ function scorePlace(
   if (moodMatches.length > 0) {
     score += moodMatches.length * 3;
     reasons.push(`気分にぴったり (${moodMatches.length}つ一致)`);
+  }
+
+  if (sessionWantsFood(choices) && place.foodCategories) {
+    const foodMatches = place.foodCategories.filter((c) =>
+      choices.foodCategories.includes(c),
+    );
+    if (foodMatches.length > 0) {
+      score += foodMatches.length * 4;
+      const labels = foodMatches.map((c) => FOOD_CATEGORY_LABELS[c]).slice(0, 2);
+      reasons.push(`食べたいジャンル: ${labels.join("・")}`);
+    }
   }
 
   if (weather) {

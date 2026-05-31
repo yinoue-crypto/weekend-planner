@@ -1,6 +1,7 @@
 "use client";
 
 import type { Place, ScoredPlace } from "@/lib/types";
+import { FOOD_CATEGORY_LABELS } from "@/lib/types";
 import {
   googleMapsDirectionsUrl,
   googleMapsSearchUrl,
@@ -93,6 +94,19 @@ export default function PlaceCard({
                 className="text-xs px-2 py-1 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-200"
               >
                 {r}
+              </span>
+            ))}
+          </div>
+        ) : null}
+
+        {place.foodCategories && place.foodCategories.length > 0 ? (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {place.foodCategories.slice(0, 4).map((cat) => (
+              <span
+                key={cat}
+                className="text-xs px-2 py-1 rounded-full bg-orange-100 dark:bg-orange-950/40 text-orange-800 dark:text-orange-200"
+              >
+                {FOOD_CATEGORY_LABELS[cat]}
               </span>
             ))}
           </div>

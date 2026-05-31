@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import PlaceCard from "@/components/PlaceCard";
 import { formatTravelMinutes } from "@/lib/distance";
+import { formatFoodCategoryLabels, sessionWantsFood } from "@/lib/food";
 import { getAllPlaces } from "@/lib/places";
 import { rankPlaces } from "@/lib/scoring";
 import {
@@ -138,6 +139,10 @@ export default function ResultsPage() {
         ? formatTravelMinutes(minMinutes)
         : `${formatTravelMinutes(minMinutes)}〜${formatTravelMinutes(maxMinutes)}`;
 
+  const foodFilterLabel = sessionWantsFood(session.choices)
+    ? formatFoodCategoryLabels(session.choices.foodCategories)
+    : null;
+
   return (
     <div className="flex flex-col min-h-screen pb-24">
       <header className="px-5 pt-4 safe-top">
@@ -162,6 +167,11 @@ export default function ResultsPage() {
         {travelFilterLabel ? (
           <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
             移動時間: {travelFilterLabel}（概算）
+          </p>
+        ) : null}
+        {foodFilterLabel ? (
+          <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
+            グルメ: {foodFilterLabel}
           </p>
         ) : null}
         {excluded.length > 0 ? (
