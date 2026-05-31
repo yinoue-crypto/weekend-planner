@@ -27,7 +27,7 @@ import type {
   VisitRecord,
   WeatherSnapshot,
 } from "@/lib/types";
-import { normalizeSessionChoices, TRAVEL_TIME_LIMITS } from "@/lib/types";
+import { normalizeSessionChoices, MAX_SUGGESTION_RESULTS, TRAVEL_TIME_LIMITS } from "@/lib/types";
 
 type LastSession = {
   choices: SessionChoices;
@@ -154,7 +154,9 @@ export default function ResultsPage() {
           {allRanked.length === 0
             ? "候補なし"
             : allRanked.length === ranked.length
-              ? `${ranked.length}件をスコア順に表示`
+              ? allRanked.length >= MAX_SUGGESTION_RESULTS
+                ? `${ranked.length}件をスコア順に表示（最大${MAX_SUGGESTION_RESULTS}件）`
+                : `${ranked.length}件をスコア順に表示`
               : `${ranked.length}件表示（全${allRanked.length}件中）`}
         </p>
         {travelFilterLabel ? (
