@@ -1,0 +1,44 @@
+---
+description: Coding conventions for the weekend-planner project
+alwaysApply: true
+---
+
+# 週末ナビ コーディング規約
+
+このルールは weekend-planner 全体に常時適用される。
+
+## アーキテクチャ規約
+
+- **データ型は [lib/types.ts](mdc:lib/types.ts) に集約する**。新しい型を作るときはここに追加してから使う。コンポーネント内に `type Foo = ...` を散らさない。
+- **localStorage 操作は [lib/storage.ts](mdc:lib/storage.ts) 経由のみ**。コンポーネントから直接 `localStorage.getItem` / `setItem` を呼ばない。新しい永続データを足すときは storage.ts に load/save 関数を追加する。
+- **天気取得は [lib/weather.ts](mdc:lib/weather.ts) 経由**。直接 fetch を書かない。
+- **スコアリングロジックは [lib/scoring.ts](mdc:lib/scoring.ts)**。提案結果の挙動を変えたいときはここ。重みやハードフィルタの条件を変えるだけで結果が変わるよう設計されている。
+
+## スポット追加
+
+- [data/seed-places-nagoya.json](mdc:data/seed-places-nagoya.json) に既存形式で追加する。
+- `tags` は [lib/types.ts](mdc:lib/types.ts) の `PlaceTag` 型の語彙のみ使う。勝手に新タグを増やすときは `PlaceTag` 型も拡張すること。
+- `moods` は `Mood` 型の語彙のみ。
+- 緯度経度は Google Maps で右クリック → 座標コピーで取得できる。
+
+## スマホUI規約
+
+- タップ可能要素は最小高さ **44px**（py-3 以上、または明示的に h-11 以上）。
+- 本文フォントは最低 **14px**（text-sm 以上）。
+- メインコンテナは `max-w-md mx-auto` に揃える（既に [app/layout.tsx](mdc:app/layout.tsx) で適用済み）。
+- ボタンには `active:scale-[0.97]` などの押した感を付ける。
+- 色は Tailwind のオレンジ/アンバー系を基調（テーマカラー #f97316）。`bg-orange-500` をプライマリアクションに使う。
+- ダークモード対応を忘れない。`dark:bg-stone-800` などペアで指定する。
+
+## コミット規約
+
+- 1行目に種別プレフィックス: `feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `chore:`
+- 日本語OK。例: `feat: 気分カテゴリに「映え」を追加`
+- 変更を加えたら **必ず `npm run build` を通してからコミット**する。
+
+## やってはいけないこと
+
+- API キーが必要な外部サービスを追加する（Google Places API、有料の地図API など）
+- 個人データを seed JSON に入れる
+- `any` 型の濫用（特に lib/ 配下では避ける）
+- `console.log` を本番コードに残す
