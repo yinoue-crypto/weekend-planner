@@ -1,4 +1,5 @@
 import type {
+  ExcludedPlace,
   FamilyProfile,
   HomeBase,
   Place,
@@ -11,6 +12,7 @@ const KEYS = {
   home: "weekend-planner/home",
   favorites: "weekend-planner/favorites",
   visits: "weekend-planner/visits",
+  excluded: "weekend-planner/excluded",
   lastSession: "weekend-planner/last-session",
 };
 
@@ -118,6 +120,38 @@ export function clearVisits(): void {
   writeJSON(KEYS.visits, []);
 }
 
+export function loadExcluded(): ExcludedPlace[] {
+  return readJSON<ExcludedPlace[]>(KEYS.excluded, []);
+}
+
+export function addExcluded(
+  place: Pick<Place, "id" | "name" | "area">,
+): ExcludedPlace[] {
+  const current = loadExcluded();
+  if (current.some((e) => e.placeId === place.id)) return current;
+  const next: ExcludedPlace[] = [
+    {
+      placeId: place.id,
+      placeName: place.name,
+      placeArea: place.area,
+      excludedAt: new Date().toISOString(),
+    },
+    ...current,
+  ];
+  writeJSON(KEYS.excluded, next);
+  return next;
+}
+
+export function removeExcluded(placeId: string): ExcludedPlace[] {
+  const next = loadExcluded().filter((e) => e.placeId !== placeId);
+  writeJSON(KEYS.excluded, next);
+  return next;
+}
+
+export function clearExcluded(): void {
+  writeJSON(KEYS.excluded, []);
+}
+
 export function saveLastSession<T>(session: T): void {
   writeJSON(KEYS.lastSession, session);
 }
@@ -133,6 +167,7 @@ export function exportAll(): string {
       home: loadHome(),
       favorites: loadFavorites(),
       visits: loadVisits(),
+      excluded: loadExcluded(),
     },
     null,
     2,
@@ -146,6 +181,7 @@ export function importAll(json: string): boolean {
     if (data.home) saveHome(data.home);
     if (data.favorites) saveFavorites(data.favorites);
     if (data.visits) writeJSON(KEYS.visits, data.visits);
+    if (data.excluded) writeJSON(KEYS.excluded, data.excluded);
     return true;
   } catch {
     return false;

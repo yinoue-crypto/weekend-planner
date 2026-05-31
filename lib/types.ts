@@ -129,3 +129,11 @@ export type HomeBase = {
   lat: number;
   lng: number;
 };
+
+/** 提案から除外したスポット（戻す用に名前を保持） */
+export type ExcludedPlace = {
+  placeId: string;
+  placeName: string;
+  placeArea: string;
+  excludedAt: string;
+};

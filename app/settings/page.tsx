@@ -6,9 +6,11 @@ import FamilyStep from "@/components/wizard/FamilyStep";
 import {
   DEFAULT_FAMILY,
   NAGOYA_DEFAULT,
+  clearExcluded,
   clearVisits,
   exportAll,
   importAll,
+  loadExcluded,
   loadFamily,
   loadHome,
   saveFamily,
@@ -156,6 +158,18 @@ export default function SettingsPage() {
     }
   }
 
+  function handleClearExcluded() {
+    const count = loadExcluded().length;
+    if (count === 0) {
+      flash("除外リストは空です");
+      return;
+    }
+    if (confirm(`除外リスト（${count}件）をすべて戻しますか？`)) {
+      clearExcluded();
+      flash("除外リストを空にしました");
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-screen px-5 pt-6 pb-10 safe-top safe-bottom">
       <header className="mb-6">
@@ -297,6 +311,19 @@ export default function SettingsPage() {
       </section>
 
       <section className="mt-5 rounded-3xl bg-white dark:bg-stone-800 px-4 py-5 shadow-sm">
+        <h2 className="font-bold text-stone-800 dark:text-stone-100">除外リスト</h2>
+        <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
+          提案結果から外したスポットを確認・復元できます
+        </p>
+        <Link
+          href="/excluded"
+          className="mt-3 block w-full rounded-xl border-2 border-stone-200 dark:border-stone-700 py-3 text-center text-sm font-bold text-stone-700 dark:text-stone-200 active:scale-[0.98]"
+        >
+          🚫 除外リストを開く
+        </Link>
+      </section>
+
+      <section className="mt-5 rounded-3xl bg-white dark:bg-stone-800 px-4 py-5 shadow-sm">
         <h2 className="font-bold text-stone-800 dark:text-stone-100">データ管理</h2>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <button
@@ -312,6 +339,13 @@ export default function SettingsPage() {
             className="rounded-xl border-2 border-red-200 dark:border-red-900 py-2 text-sm font-medium text-red-700 dark:text-red-300"
           >
             🗑 行った！を削除
+          </button>
+          <button
+            type="button"
+            onClick={handleClearExcluded}
+            className="col-span-2 rounded-xl border-2 border-red-200 dark:border-red-900 py-2 text-sm font-medium text-red-700 dark:text-red-300"
+          >
+            🚫 除外リストをすべて戻す
           </button>
         </div>
         <textarea

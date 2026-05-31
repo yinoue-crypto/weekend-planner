@@ -11,6 +11,7 @@ type Props = {
   rank: number;
   favorited: boolean;
   onToggleFavorite: (place: Place) => void;
+  onExclude: (place: Place) => void;
   onPick: (place: Place) => void;
 };
 
@@ -44,6 +45,7 @@ export default function PlaceCard({
   rank,
   favorited,
   onToggleFavorite,
+  onExclude,
   onPick,
 }: Props) {
   const { place, reasons } = scored;
@@ -109,6 +111,14 @@ export default function PlaceCard({
               </span>
             ))}
         </div>
+
+        <button
+          type="button"
+          onClick={() => onExclude(place)}
+          className="mt-3 w-full rounded-xl border-2 border-stone-200 dark:border-stone-600 py-2.5 text-sm font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-700/50 active:scale-[0.98]"
+        >
+          🚫 提案から除外
+        </button>
       </div>
 
       <div className="grid grid-cols-3 border-t border-stone-100 dark:border-stone-700">
