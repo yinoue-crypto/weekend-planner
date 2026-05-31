@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import VisitedList from "@/components/VisitedList";
 import WeatherBanner from "@/components/WeatherBanner";
 import { getUniqueVisits } from "@/lib/visits";
-import { NAGOYA_DEFAULT, loadHome, loadVisits } from "@/lib/storage";
+import { NAGOYA_DEFAULT, loadFavorites, loadHome, loadVisits } from "@/lib/storage";
 import type { HomeBase, VisitRecord } from "@/lib/types";
 
 function isWeekend(d: Date = new Date()): boolean {
@@ -24,6 +24,7 @@ function weekendLabel(d: Date = new Date()): string {
 export default function HomePage() {
   const [home, setHome] = useState<HomeBase>(NAGOYA_DEFAULT);
   const [visited, setVisited] = useState<VisitRecord[]>([]);
+  const [favoriteCount, setFavoriteCount] = useState(0);
   const [visitedOpen, setVisitedOpen] = useState(false);
   const weekend = isWeekend();
   const label = weekendLabel();
@@ -31,11 +32,13 @@ export default function HomePage() {
   useEffect(() => {
     setHome(loadHome());
     setVisited(getUniqueVisits(loadVisits()));
+    setFavoriteCount(loadFavorites().length);
   }, []);
 
   useEffect(() => {
     function onFocus() {
       setVisited(getUniqueVisits(loadVisits()));
+      setFavoriteCount(loadFavorites().length);
     }
     window.addEventListener("focus", onFocus);
     return () => window.removeEventListener("focus", onFocus);
@@ -115,10 +118,13 @@ export default function HomePage() {
       <nav className="mt-6 grid grid-cols-2 gap-3">
         <Link
           href="/favorites"
-          className="rounded-2xl bg-white dark:bg-stone-800 border-2 border-stone-200 dark:border-stone-700 px-4 py-5 text-center font-bold text-stone-700 dark:text-stone-200 active:scale-[0.98]"
+          className="relative rounded-2xl bg-white dark:bg-stone-800 border-2 border-stone-200 dark:border-stone-700 px-4 py-5 text-center font-bold text-stone-700 dark:text-stone-200 active:scale-[0.98] min-h-11"
         >
           <div className="text-3xl mb-1" aria-hidden>⭐</div>
           お気に入り
+          <span className="absolute top-3 right-3 text-xs font-medium text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/50 px-2 py-1 rounded-full">
+            {favoriteCount}件
+          </span>
         </Link>
         <Link
           href="/settings"
