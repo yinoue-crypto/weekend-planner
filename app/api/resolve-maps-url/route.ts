@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { geocodeJapaneseAddress, extractAddressQueryFromMapsUrl } from "@/lib/geocode";
 import { parseGoogleMapsUrl } from "@/lib/googleMapsUrl";
 
 export async function GET(request: Request) {
@@ -27,7 +28,16 @@ export async function GET(request: Request) {
       return NextResponse.json(parsed);
     }
 
-    // Some redirects land on HTML; try parsing the request URL chain
+    const addressQ =
+      extractAddressQueryFromMapsUrl(finalUrl) ??
+      extractAddressQueryFromMapsUrl(trimmed);
+    if (addressQ) {
+      const geocoded = await geocodeJapaneseAddress(addressQ);
+      if (geocoded) {
+        return NextResponse.json(geocoded);
+      }
+    }
+
     const fromOriginal = parseGoogleMapsUrl(trimmed);
     if (fromOriginal) {
       return NextResponse.json(fromOriginal);
