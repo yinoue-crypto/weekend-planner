@@ -7,7 +7,7 @@ import {
   loadFavorites,
   removeFavorite,
 } from "@/lib/storage";
-import { parseGoogleMapsUrl, googleMapsSearchUrl } from "@/lib/googleMapsUrl";
+import { googleMapsSearchUrl, resolveGoogleMapsInput } from "@/lib/googleMapsUrl";
 import type { Place } from "@/lib/types";
 
 export default function FavoritesPage() {
@@ -15,40 +15,46 @@ export default function FavoritesPage() {
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     setFavorites(loadFavorites());
   }, []);
 
-  function handleAdd() {
-    const parsed = parseGoogleMapsUrl(url);
-    if (!parsed) {
-      setMessage(
-        "URLから座標を読み取れませんでした。Google Mapsで場所を開いて「共有→リンクをコピー」したURLを貼ってください。",
-      );
-      return;
+  async function handleAdd() {
+    setSaving(true);
+    try {
+      const parsed = await resolveGoogleMapsInput(url, name.trim() || "登録した場所");
+      if (!parsed) {
+        setMessage(
+          "URLから座標を読み取れませんでした。Google Mapsで場所を開いて「共有→リンクをコピー」したURLを貼ってください。",
+        );
+        return;
+      }
+      const finalName = name.trim() || parsed.name;
+      const id = `custom-${Date.now()}`;
+      const place: Place = {
+        id,
+        name: finalName,
+        area: "登録地",
+        lat: parsed.lat,
+        lng: parsed.lng,
+        tags: ["indoor", "outdoor"],
+        moods: ["relax"],
+        duration: ["half", "full"],
+        budget: "low",
+        transport: ["car", "train", "walk"],
+        description: "Google Mapsから登録したお気に入り",
+        source: "favorite",
+      };
+      setFavorites(addFavorite(place));
+      setUrl("");
+      setName("");
+      setMessage(`「${finalName}」を追加しました`);
+      setTimeout(() => setMessage(null), 3000);
+    } finally {
+      setSaving(false);
     }
-    const finalName = name.trim() || parsed.name;
-    const id = `custom-${Date.now()}`;
-    const place: Place = {
-      id,
-      name: finalName,
-      area: "登録地",
-      lat: parsed.lat,
-      lng: parsed.lng,
-      tags: ["indoor", "outdoor"],
-      moods: ["relax"],
-      duration: ["half", "full"],
-      budget: "low",
-      transport: ["car", "train", "walk"],
-      description: "Google Mapsから登録したお気に入り",
-      source: "favorite",
-    };
-    setFavorites(addFavorite(place));
-    setUrl("");
-    setName("");
-    setMessage(`「${finalName}」を追加しました`);
-    setTimeout(() => setMessage(null), 3000);
   }
 
   function handleRemove(id: string) {
@@ -94,10 +100,10 @@ export default function FavoritesPage() {
         <button
           type="button"
           onClick={handleAdd}
-          disabled={!url.trim()}
+          disabled={!url.trim() || saving}
           className="mt-3 w-full rounded-xl bg-orange-500 disabled:bg-stone-300 dark:disabled:bg-stone-700 text-white font-bold py-3 active:scale-[0.98]"
         >
-          ＋ お気に入りに追加
+          {saving ? "読み込み中…" : "＋ お気に入りに追加"}
         </button>
         {message ? (
           <p className="mt-2 text-xs text-orange-700 dark:text-orange-300">{message}</p>

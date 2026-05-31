@@ -14,7 +14,7 @@ import {
   saveFamily,
   saveHome,
 } from "@/lib/storage";
-import { parseGoogleMapsUrl } from "@/lib/googleMapsUrl";
+import { resolveGoogleMapsInput } from "@/lib/googleMapsUrl";
 import type { FamilyProfile, HomeBase } from "@/lib/types";
 
 const NAGOYA_PRESETS: HomeBase[] = [
@@ -28,13 +28,22 @@ const NAGOYA_PRESETS: HomeBase[] = [
 export default function SettingsPage() {
   const [family, setFamily] = useState<FamilyProfile>(DEFAULT_FAMILY);
   const [home, setHome] = useState<HomeBase>(NAGOYA_DEFAULT);
-  const [homeUrl, setHomeUrl] = useState("");
+  const [homeLabel, setHomeLabel] = useState("自宅");
+  const [homeInput, setHomeInput] = useState("");
+  const [homeAddress, setHomeAddress] = useState("");
+  const [homeLat, setHomeLat] = useState("");
+  const [homeLng, setHomeLng] = useState("");
+  const [homeSaving, setHomeSaving] = useState(false);
   const [importJson, setImportJson] = useState("");
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
     setFamily(loadFamily());
-    setHome(loadHome());
+    const saved = loadHome();
+    setHome(saved);
+    if (saved.label !== NAGOYA_DEFAULT.label || saved.lat !== NAGOYA_DEFAULT.lat) {
+      setHomeLabel(saved.label);
+    }
   }, []);
 
   function flash(msg: string) {
@@ -53,17 +62,69 @@ export default function SettingsPage() {
     flash(`拠点を「${preset.label}」に変更`);
   }
 
-  function handleCustomHome() {
-    const parsed = parseGoogleMapsUrl(homeUrl);
-    if (!parsed) {
-      flash("URLから座標を読み取れませんでした");
-      return;
-    }
-    const next: HomeBase = { label: parsed.name, lat: parsed.lat, lng: parsed.lng };
+  function saveHomeBase(next: HomeBase, successMsg?: string) {
     setHome(next);
     saveHome(next);
-    setHomeUrl("");
-    flash(`拠点を「${next.label}」に変更`);
+    setHomeLabel(next.label);
+    flash(successMsg ?? `拠点を「${next.label}」に保存しました`);
+  }
+
+  async function handleCustomHome() {
+    setHomeSaving(true);
+    try {
+      const label = homeLabel.trim() || "自宅";
+
+      if (homeInput.trim()) {
+        const parsed = await resolveGoogleMapsInput(homeInput, label);
+        if (parsed) {
+          saveHomeBase(
+            { label: homeLabel.trim() || parsed.name || "自宅", lat: parsed.lat, lng: parsed.lng },
+            `自宅を保存しました（${parsed.lat.toFixed(4)}, ${parsed.lng.toFixed(4)}）`,
+          );
+          setHomeInput("");
+          return;
+        }
+        flash("URL/座標を読み取れませんでした。下の手順を確認してください");
+        return;
+      }
+
+      const lat = parseFloat(homeLat);
+      const lng = parseFloat(homeLng);
+      if (Number.isFinite(lat) && Number.isFinite(lng)) {
+        saveHomeBase({ label, lat, lng }, "自宅を保存しました");
+        setHomeLat("");
+        setHomeLng("");
+        return;
+      }
+
+      flash("Google Maps URL、座標、または緯度・経度を入力してください");
+    } finally {
+      setHomeSaving(false);
+    }
+  }
+
+  async function handleGeocodeHome() {
+    const address = homeAddress.trim();
+    if (!address) return;
+    setHomeSaving(true);
+    try {
+      const res = await fetch(`/api/geocode?q=${encodeURIComponent(address)}`);
+      if (!res.ok) {
+        flash("住所が見つかりませんでした。表記を変えて試してください");
+        return;
+      }
+      const data = (await res.json()) as { name: string; lat: number; lng: number };
+      const label = homeLabel.trim() || "自宅";
+      saveHomeBase(
+        { label, lat: data.lat, lng: data.lng },
+        `自宅を保存しました（${data.lat.toFixed(4)}, ${data.lng.toFixed(4)}）`,
+      );
+      setHomeAddress("");
+    } catch {
+      flash("住所の検索に失敗しました");
+    } finally {
+      setHomeSaving(false);
+    }
   }
 
   function handleExport() {
@@ -119,11 +180,104 @@ export default function SettingsPage() {
       </section>
 
       <section className="mt-5 rounded-3xl bg-white dark:bg-stone-800 px-4 py-5 shadow-sm">
-        <h2 className="font-bold text-stone-800 dark:text-stone-100">拠点エリア</h2>
+        <h2 className="font-bold text-stone-800 dark:text-stone-100">自宅・拠点</h2>
         <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
-          現在: {home.label}（{home.lat.toFixed(3)}, {home.lng.toFixed(3)}）
+          現在: {home.label}（{home.lat.toFixed(4)}, {home.lng.toFixed(4)}）
         </p>
-        <div className="mt-3 grid grid-cols-2 gap-2">
+
+        <div className="mt-4 space-y-3">
+          <div>
+            <label className="text-xs font-medium text-stone-600 dark:text-stone-300">
+              表示名
+            </label>
+            <input
+              type="text"
+              value={homeLabel}
+              onChange={(e) => setHomeLabel(e.target.value)}
+              placeholder="自宅"
+              className="mt-1 w-full rounded-xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 px-3 py-2 text-base"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs font-medium text-stone-600 dark:text-stone-300">
+              Google Maps から（おすすめ）
+            </label>
+            <p className="mt-0.5 text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
+              iPhone: Google Mapsで自宅を長押し → 共有 → リンクをコピー → 下に貼り付け
+              <br />
+              ※ maps.app.goo.gl の短いURLも使えます
+            </p>
+            <input
+              type="text"
+              value={homeInput}
+              onChange={(e) => setHomeInput(e.target.value)}
+              placeholder="https://maps.app.goo.gl/... または 35.1814, 136.9066"
+              className="mt-1 w-full rounded-xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 px-3 py-2 text-base"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs font-medium text-stone-600 dark:text-stone-300">
+              住所から検索
+            </label>
+            <div className="mt-1 flex gap-2">
+              <input
+                type="text"
+                value={homeAddress}
+                onChange={(e) => setHomeAddress(e.target.value)}
+                placeholder="例: 愛知県名古屋市千種区..."
+                className="flex-1 rounded-xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 px-3 py-2 text-base"
+              />
+              <button
+                type="button"
+                onClick={handleGeocodeHome}
+                disabled={!homeAddress.trim() || homeSaving}
+                className="shrink-0 rounded-xl bg-stone-200 dark:bg-stone-700 px-4 py-2 text-sm font-bold disabled:opacity-50"
+              >
+                検索
+              </button>
+            </div>
+          </div>
+
+          <details className="text-xs text-stone-500 dark:text-stone-400">
+            <summary className="cursor-pointer font-medium text-stone-600 dark:text-stone-300">
+              緯度・経度を直接入力
+            </summary>
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              <input
+                type="text"
+                inputMode="decimal"
+                value={homeLat}
+                onChange={(e) => setHomeLat(e.target.value)}
+                placeholder="緯度 35.1814"
+                className="rounded-xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 px-3 py-2 text-base"
+              />
+              <input
+                type="text"
+                inputMode="decimal"
+                value={homeLng}
+                onChange={(e) => setHomeLng(e.target.value)}
+                placeholder="経度 136.9066"
+                className="rounded-xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 px-3 py-2 text-base"
+              />
+            </div>
+          </details>
+
+          <button
+            type="button"
+            onClick={handleCustomHome}
+            disabled={homeSaving || (!homeInput.trim() && (!homeLat.trim() || !homeLng.trim()))}
+            className="w-full rounded-xl bg-orange-500 text-white font-bold py-3 active:scale-[0.98] disabled:opacity-50"
+          >
+            {homeSaving ? "読み込み中…" : "自宅として保存"}
+          </button>
+        </div>
+
+        <p className="mt-4 text-xs font-medium text-stone-600 dark:text-stone-300">
+          よく使う駅（プリセット）
+        </p>
+        <div className="mt-2 grid grid-cols-2 gap-2">
           {NAGOYA_PRESETS.map((p) => (
             <button
               key={p.label}
@@ -139,26 +293,6 @@ export default function SettingsPage() {
               {p.label}
             </button>
           ))}
-        </div>
-        <div className="mt-4">
-          <label className="text-xs text-stone-500 dark:text-stone-400">
-            Google MapsのURLから設定（任意）
-          </label>
-          <input
-            type="url"
-            value={homeUrl}
-            onChange={(e) => setHomeUrl(e.target.value)}
-            placeholder="https://www.google.com/maps/..."
-            className="mt-1 w-full rounded-xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 px-3 py-2 text-base"
-          />
-          <button
-            type="button"
-            onClick={handleCustomHome}
-            disabled={!homeUrl.trim()}
-            className="mt-2 w-full rounded-xl bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-100 font-bold py-2 disabled:opacity-50"
-          >
-            この場所を拠点に
-          </button>
         </div>
       </section>
 
