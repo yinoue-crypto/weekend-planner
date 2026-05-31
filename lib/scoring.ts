@@ -10,8 +10,23 @@ import type {
   VisitRecord,
   WeatherSnapshot,
 } from "./types";
+import { MAX_SUGGESTION_RESULTS, TRAVEL_TIME_LIMITS } from "./types";
 
 const AGE_ORDER: AgeGroup[] = ["baby", "toddler", "elementary", "teen", "adult"];
+
+type RelaxedCriterion = "travelTime" | "budget" | "duration" | "transport";
+
+const RELAX_TIERS: ReadonlySet<RelaxedCriterion>[] = [
+  new Set(),
+  new Set(["travelTime"]),
+  new Set(["budget"]),
+  new Set(["duration"]),
+  new Set(["travelTime", "budget"]),
+  new Set(["travelTime", "duration"]),
+  new Set(["budget", "duration"]),
+  new Set(["travelTime", "budget", "duration"]),
+  new Set(["travelTime", "budget", "duration", "transport"]),
+];
 
 function ageIndex(age: AgeGroup): number {
   return AGE_ORDER.indexOf(age);
@@ -40,19 +55,35 @@ function passesHardFilter(
   choices: SessionChoices,
   weather: WeatherSnapshot | null,
   home: HomeBase,
+  relax: ReadonlySet<RelaxedCriterion> = new Set(),
 ): boolean {
-  if (!place.duration.includes(choices.duration)) return false;
+  if (!relax.has("duration")) {
+    if (!place.duration.includes(choices.duration)) return false;
+  } else if (place.duration.length === 0) {
+    return false;
+  }
 
-  if (BUDGET_RANK[place.budget] > BUDGET_RANK[choices.budget]) return false;
+  const maxBudgetRank = relax.has("budget")
+    ? BUDGET_RANK[choices.budget] + 1
+    : BUDGET_RANK[choices.budget];
+  if (BUDGET_RANK[place.budget] > maxBudgetRank) return false;
 
-  if (!place.transport.includes(choices.transport)) return false;
+  if (!relax.has("transport")) {
+    if (!place.transport.includes(choices.transport)) return false;
+  }
 
-  const { minMinutes, maxMinutes } = choices.travelTimeRange;
   const travelMinutes = estimateTravelMinutes(
     distanceKm(home, place),
     choices.transport,
   );
-  if (travelMinutes < minMinutes || travelMinutes > maxMinutes) return false;
+  const { minMinutes, maxMinutes } = choices.travelTimeRange;
+  if (!relax.has("travelTime")) {
+    if (travelMinutes < minMinutes || travelMinutes > maxMinutes) return false;
+  } else {
+    if (travelMinutes < minMinutes || travelMinutes > TRAVEL_TIME_LIMITS.max) {
+      return false;
+    }
+  }
 
   const youngest = youngestAge(choices.family);
   if (place.ageMin && ageIndex(youngest) < ageIndex(place.ageMin)) return false;
@@ -131,6 +162,55 @@ function scorePlace(
   return { place, score, reasons };
 }
 
+function applyRelaxAdjustments(
+  scored: ScoredPlace,
+  choices: SessionChoices,
+  home: HomeBase,
+  relax: ReadonlySet<RelaxedCriterion>,
+): void {
+  if (relax.size === 0) return;
+
+  const travelMinutes = estimateTravelMinutes(
+    distanceKm(home, scored.place),
+    choices.transport,
+  );
+  const { maxMinutes } = choices.travelTimeRange;
+
+  if (relax.has("travelTime") && travelMinutes > maxMinutes) {
+    scored.score -= 3;
+    scored.reasons.push(`移動は${formatTravelMinutes(travelMinutes)}（希望より長め）`);
+  }
+
+  if (
+    relax.has("budget") &&
+    BUDGET_RANK[scored.place.budget] > BUDGET_RANK[choices.budget]
+  ) {
+    scored.score -= 4;
+    scored.reasons.push("予算はやや上");
+  }
+
+  if (
+    relax.has("duration") &&
+    !scored.place.duration.includes(choices.duration)
+  ) {
+    scored.score -= 5;
+    scored.reasons.push("1日かけて楽しむ向け");
+  }
+
+  if (
+    relax.has("transport") &&
+    !scored.place.transport.includes(choices.transport)
+  ) {
+    scored.score -= 4;
+    const alt = scored.place.transport.includes("train")
+      ? "電車"
+      : scored.place.transport.includes("walk")
+        ? "徒歩"
+        : "車";
+    scored.reasons.push(`${alt}向け`);
+  }
+}
+
 function isExcludedFromSuggestions(
   placeId: string,
   visitedIds: Set<string>,
@@ -145,7 +225,7 @@ function isExcludedFromSuggestions(
 }
 
 export type RankOptions = {
-  /** 省略時は条件に合う候補をすべて返す */
+  /** 省略時は MAX_SUGGESTION_RESULTS まで返す */
   limit?: number;
   jitter?: boolean;
 };
@@ -160,20 +240,38 @@ export function rankPlaces(
   excludedIds: Set<string> = new Set(),
   options: RankOptions = {},
 ): ScoredPlace[] {
-  const { limit, jitter = true } = options;
+  const { limit = MAX_SUGGESTION_RESULTS, jitter = true } = options;
   const visitedIds = new Set(getUniqueVisits(visits).map((v) => v.placeId));
-  const filtered = places.filter(
-    (p) =>
-      passesHardFilter(p, choices, weather, home) &&
-      !isExcludedFromSuggestions(p.id, visitedIds, favoriteIds, excludedIds),
-  );
-  const scored = filtered.map((p) => scorePlace(p, choices, weather, home));
+  const seen = new Set<string>();
+  const tiered: { tier: number; scored: ScoredPlace }[] = [];
 
-  scored.sort((a, b) => {
-    const aScore = a.score + (jitter ? Math.random() * 0.5 : 0);
-    const bScore = b.score + (jitter ? Math.random() * 0.5 : 0);
+  for (let tier = 0; tier < RELAX_TIERS.length; tier += 1) {
+    if (tiered.length >= limit) break;
+
+    const relax = RELAX_TIERS[tier];
+    for (const place of places) {
+      if (seen.has(place.id)) continue;
+      if (
+        !passesHardFilter(place, choices, weather, home, relax) ||
+        isExcludedFromSuggestions(place.id, visitedIds, favoriteIds, excludedIds)
+      ) {
+        continue;
+      }
+
+      const scored = scorePlace(place, choices, weather, home);
+      applyRelaxAdjustments(scored, choices, home, relax);
+      tiered.push({ tier, scored });
+      seen.add(place.id);
+      if (tiered.length >= limit) break;
+    }
+  }
+
+  tiered.sort((a, b) => {
+    if (a.tier !== b.tier) return a.tier - b.tier;
+    const aScore = a.scored.score + (jitter ? Math.random() * 0.5 : 0);
+    const bScore = b.scored.score + (jitter ? Math.random() * 0.5 : 0);
     return bScore - aScore;
   });
 
-  return limit !== undefined ? scored.slice(0, limit) : scored;
+  return tiered.map((entry) => entry.scored);
 }

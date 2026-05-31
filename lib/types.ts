@@ -35,6 +35,9 @@ export const TRAVEL_TIME_LIMITS = {
   step: 5,
 } as const;
 
+/** 結果ページで提案できる候補の上限 */
+export const MAX_SUGGESTION_RESULTS = 50;
+
 export const DEFAULT_TRAVEL_TIME_RANGE: TravelTimeRange = {
   minMinutes: 0,
   maxMinutes: 60,
