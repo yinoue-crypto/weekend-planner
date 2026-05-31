@@ -35,13 +35,25 @@ export default function HomePage() {
     setFavoriteCount(loadFavorites().length);
   }, []);
 
+  function refreshCounts() {
+    setHome(loadHome());
+    setVisited(getUniqueVisits(loadVisits()));
+    setFavoriteCount(loadFavorites().length);
+  }
+
   useEffect(() => {
     function onFocus() {
-      setVisited(getUniqueVisits(loadVisits()));
-      setFavoriteCount(loadFavorites().length);
+      refreshCounts();
+    }
+    function onDataChanged() {
+      refreshCounts();
     }
     window.addEventListener("focus", onFocus);
-    return () => window.removeEventListener("focus", onFocus);
+    window.addEventListener("weekend-planner-data-changed", onDataChanged);
+    return () => {
+      window.removeEventListener("focus", onFocus);
+      window.removeEventListener("weekend-planner-data-changed", onDataChanged);
+    };
   }, []);
 
   return (
@@ -110,7 +122,7 @@ export default function HomePage() {
         ) : null}
         {visitedOpen ? (
           <div id="visited-list-panel" className="mt-3">
-            <VisitedList visits={visited} compact grouped />
+            <VisitedList visits={visited} home={home} compact grouped />
           </div>
         ) : null}
       </section>
