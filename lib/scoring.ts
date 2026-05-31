@@ -1,5 +1,5 @@
 import { distanceKm, estimateTravelMinutes, formatTravelMinutes } from "./distance";
-import { placeMatchesFoodCategories, sessionWantsFood } from "./food";
+import { isFoodVenue, placeMatchesFoodCategories, sessionWantsFood } from "./food";
 import { isOnsenPlace, sessionWantsOnsen } from "./onsen";
 import { getUniqueVisits } from "./visits";
 import { FOOD_CATEGORY_LABELS } from "./types";
@@ -108,6 +108,8 @@ function passesHardFilter(
     if (!placeMatchesFoodCategories(place, choices.foodCategories)) {
       return false;
     }
+  } else if (isFoodVenue(place)) {
+    return false;
   }
 
   if (sessionWantsOnsen(choices)) {
