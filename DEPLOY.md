@@ -30,7 +30,18 @@ Vercel → Project → Settings → Git → Production Branch
 
 ## 環境変数
 
-このアプリは API キー不要のため、環境変数の設定は **不要** です。
+天気・地図だけなら API キーは **不要** です。
+
+### 家族データの端末間同期（おすすめ）
+
+お気に入り・「行った！」を家族のスマホで共有するには **Vercel KV**（Upstash Redis）を接続します。
+
+1. Vercel → 対象プロジェクト → **Storage** → **Create Database** → **KV**
+2. 作成後、プロジェクトに **Connect**（`KV_REST_API_URL` / `KV_REST_API_TOKEN` が自動設定されます）
+3. **Redeploy** して反映
+4. 各スマホの **設定 → 家族で共有** で、同じ家族コードを入力
+
+※ KV 未接続でもアプリは使えます（データは各端末の localStorage のみ）。
 
 ## GitHub Actions（CI）
 

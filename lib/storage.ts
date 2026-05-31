@@ -11,6 +11,8 @@ const KEYS = {
   home: "weekend-planner/home",
   favorites: "weekend-planner/favorites",
   visits: "weekend-planner/visits",
+  syncCode: "weekend-planner/sync-code",
+  syncMeta: "weekend-planner/sync-meta",
   lastSession: "weekend-planner/last-session",
 };
 
@@ -54,6 +56,7 @@ export function loadFamily(): FamilyProfile {
 
 export function saveFamily(profile: FamilyProfile): void {
   writeJSON(KEYS.family, profile);
+  notifyDataChangedIfBrowser();
 }
 
 export function loadHome(): HomeBase {
@@ -62,6 +65,7 @@ export function loadHome(): HomeBase {
 
 export function saveHome(home: HomeBase): void {
   writeJSON(KEYS.home, home);
+  notifyDataChangedIfBrowser();
 }
 
 export function loadFavorites(): Place[] {
@@ -70,6 +74,7 @@ export function loadFavorites(): Place[] {
 
 export function saveFavorites(places: Place[]): void {
   writeJSON(KEYS.favorites, places);
+  notifyDataChangedIfBrowser();
 }
 
 export function addFavorite(place: Place): Place[] {
@@ -105,17 +110,84 @@ export function recordVisit(place: Pick<Place, "id" | "name" | "area" | "lat" | 
     ...visits,
   ].slice(0, 100);
   writeJSON(KEYS.visits, next);
+  notifyDataChangedIfBrowser();
   return next;
 }
 
 export function removeVisit(placeId: string): VisitRecord[] {
   const next = loadVisits().filter((v) => v.placeId !== placeId);
   writeJSON(KEYS.visits, next);
+  notifyDataChangedIfBrowser();
   return next;
 }
 
 export function clearVisits(): void {
   writeJSON(KEYS.visits, []);
+  notifyDataChanged();
+}
+
+export function saveVisits(visits: VisitRecord[]): void {
+  writeJSON(KEYS.visits, visits);
+  notifyDataChanged();
+}
+
+export function loadSyncCode(): string | null {
+  const code = readJSON<string | null>(KEYS.syncCode, null);
+  if (!code || typeof code !== "string") return null;
+  return code.trim().toUpperCase() || null;
+}
+
+export function saveSyncCode(code: string): void {
+  writeJSON(KEYS.syncCode, code.trim().toUpperCase());
+}
+
+export function clearSyncCode(): void {
+  if (!isBrowser()) return;
+  try {
+    window.localStorage.removeItem(KEYS.syncCode);
+    window.localStorage.removeItem(KEYS.syncMeta);
+  } catch {
+    // ignore
+  }
+}
+
+export type SyncMeta = {
+  lastSyncedAt: string | null;
+  lastError: string | null;
+};
+
+export function loadSyncMeta(): SyncMeta {
+  return readJSON<SyncMeta>(KEYS.syncMeta, { lastSyncedAt: null, lastError: null });
+}
+
+export function saveSyncMeta(meta: SyncMeta): void {
+  writeJSON(KEYS.syncMeta, meta);
+}
+
+let dataChangeListeners: Array<() => void> = [];
+
+/** 同期・UI更新用（localStorage 変更の通知） */
+export function onDataChanged(listener: () => void): () => void {
+  dataChangeListeners.push(listener);
+  return () => {
+    dataChangeListeners = dataChangeListeners.filter((l) => l !== listener);
+  };
+}
+
+export function notifyDataChanged(): void {
+  if (!isBrowser()) return;
+  dataChangeListeners.forEach((l) => {
+    try {
+      l();
+    } catch {
+      // ignore
+    }
+  });
+  window.dispatchEvent(new CustomEvent("weekend-planner-data-changed"));
+}
+
+function notifyDataChangedIfBrowser(): void {
+  notifyDataChanged();
 }
 
 export function saveLastSession<T>(session: T): void {
@@ -127,12 +199,14 @@ export function loadLastSession<T>(): T | null {
 }
 
 export function exportAll(): string {
+  const syncCode = loadSyncCode();
   return JSON.stringify(
     {
       family: loadFamily(),
       home: loadHome(),
       favorites: loadFavorites(),
       visits: loadVisits(),
+      ...(syncCode ? { syncCode } : {}),
     },
     null,
     2,
@@ -145,7 +219,11 @@ export function importAll(json: string): boolean {
     if (data.family) saveFamily(data.family);
     if (data.home) saveHome(data.home);
     if (data.favorites) saveFavorites(data.favorites);
-    if (data.visits) writeJSON(KEYS.visits, data.visits);
+    if (data.visits) saveVisits(normalizeVisits(data.visits));
+    if (typeof data.syncCode === "string" && data.syncCode.trim()) {
+      saveSyncCode(data.syncCode);
+    }
+    notifyDataChangedIfBrowser();
     return true;
   } catch {
     return false;

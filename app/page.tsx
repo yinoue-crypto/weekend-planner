@@ -35,13 +35,24 @@ export default function HomePage() {
     setFavoriteCount(loadFavorites().length);
   }, []);
 
+  function refreshCounts() {
+    setVisited(getUniqueVisits(loadVisits()));
+    setFavoriteCount(loadFavorites().length);
+  }
+
   useEffect(() => {
     function onFocus() {
-      setVisited(getUniqueVisits(loadVisits()));
-      setFavoriteCount(loadFavorites().length);
+      refreshCounts();
+    }
+    function onDataChanged() {
+      refreshCounts();
     }
     window.addEventListener("focus", onFocus);
-    return () => window.removeEventListener("focus", onFocus);
+    window.addEventListener("weekend-planner-data-changed", onDataChanged);
+    return () => {
+      window.removeEventListener("focus", onFocus);
+      window.removeEventListener("weekend-planner-data-changed", onDataChanged);
+    };
   }, []);
 
   return (

@@ -4,15 +4,25 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import FamilyStep from "@/components/wizard/FamilyStep";
 import {
+  checkSyncAvailable,
+  generateFamilyCode,
+  isValidFamilyCode,
+  pullAndMerge,
+} from "@/lib/familySync";
+import {
   DEFAULT_FAMILY,
   NAGOYA_DEFAULT,
+  clearSyncCode,
   clearVisits,
   exportAll,
   importAll,
   loadFamily,
   loadHome,
+  loadSyncCode,
+  loadSyncMeta,
   saveFamily,
   saveHome,
+  saveSyncCode,
 } from "@/lib/storage";
 import { resolveGoogleMapsInput } from "@/lib/googleMapsUrl";
 import type { FamilyProfile, HomeBase } from "@/lib/types";
@@ -36,6 +46,10 @@ export default function SettingsPage() {
   const [homeSaving, setHomeSaving] = useState(false);
   const [importJson, setImportJson] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  const [syncCodeInput, setSyncCodeInput] = useState("");
+  const [syncAvailable, setSyncAvailable] = useState<boolean | null>(null);
+  const [syncBusy, setSyncBusy] = useState(false);
+  const [syncMeta, setSyncMeta] = useState(loadSyncMeta());
 
   useEffect(() => {
     setFamily(loadFamily());
@@ -44,6 +58,9 @@ export default function SettingsPage() {
     if (saved.label !== NAGOYA_DEFAULT.label || saved.lat !== NAGOYA_DEFAULT.lat) {
       setHomeLabel(saved.label);
     }
+    const code = loadSyncCode();
+    if (code) setSyncCodeInput(code);
+    void checkSyncAvailable().then(setSyncAvailable);
   }, []);
 
   function flash(msg: string) {
@@ -143,6 +160,9 @@ export default function SettingsPage() {
       setFamily(loadFamily());
       setHome(loadHome());
       setImportJson("");
+      if (loadSyncCode()) {
+        void pullAndMerge().then(() => refreshSyncMeta());
+      }
       flash("インポートしました");
     } else {
       flash("JSONの形式が不正です");
@@ -156,6 +176,62 @@ export default function SettingsPage() {
     }
   }
 
+  function refreshSyncMeta() {
+    setSyncMeta(loadSyncMeta());
+  }
+
+  function handleSaveSyncCode() {
+    const code = syncCodeInput.trim().toUpperCase();
+    if (!isValidFamilyCode(code)) {
+      flash("家族コードは英数字6〜12文字です");
+      return;
+    }
+    saveSyncCode(code);
+    void pullAndMerge().then((r) => {
+      refreshSyncMeta();
+      if (r === "ok") flash("家族コードを保存して同期しました");
+      else if (r === "error") flash(loadSyncMeta().lastError ?? "同期に失敗しました");
+      else flash("家族コードを保存しました");
+    });
+  }
+
+  function handleNewSyncCode() {
+    const code = generateFamilyCode();
+    setSyncCodeInput(code);
+    saveSyncCode(code);
+    void pullAndMerge().then(() => {
+      refreshSyncMeta();
+      flash(`新しいコードを発行: ${code}`);
+    });
+  }
+
+  async function handleSyncNow() {
+    setSyncBusy(true);
+    try {
+      const result = await pullAndMerge();
+      refreshSyncMeta();
+      if (result === "no-code") flash("先に家族コードを保存してください");
+      else if (result === "error") flash(loadSyncMeta().lastError ?? "同期に失敗しました");
+      else flash("家族のデータを同期しました");
+    } finally {
+      setSyncBusy(false);
+    }
+  }
+
+  function handleCopySyncCode() {
+    const code = syncCodeInput.trim().toUpperCase();
+    if (!code) return;
+    navigator.clipboard?.writeText(code).then(() => flash("家族コードをコピーしました"));
+  }
+
+  function handleClearSyncCode() {
+    if (!confirm("家族コードをこの端末から削除しますか？（クラウドのデータは残ります）")) return;
+    clearSyncCode();
+    setSyncCodeInput("");
+    refreshSyncMeta();
+    flash("家族コードを解除しました");
+  }
+
   return (
     <div className="flex flex-col min-h-screen px-5 pt-6 pb-10 safe-top safe-bottom">
       <header className="mb-6">
@@ -165,7 +241,88 @@ export default function SettingsPage() {
         <h1 className="mt-2 text-2xl font-bold text-stone-900 dark:text-stone-100">設定</h1>
       </header>
 
-      <section className="rounded-3xl bg-white dark:bg-stone-800 px-4 py-5 shadow-sm">
+      <section className="rounded-3xl bg-orange-50 dark:bg-stone-800 border-2 border-orange-100 dark:border-stone-700 px-4 py-5 shadow-sm">
+        <h2 className="font-bold text-stone-800 dark:text-stone-100">
+          📱 家族で共有（複数のスマホ）
+        </h2>
+        <p className="mt-1 text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
+          同じ「家族コード」を入れた端末で、お気に入り・行った！・自宅・家族構成が自動で揃います。
+          コードは家族だけに共有してください。
+        </p>
+        {syncAvailable === false ? (
+          <p className="mt-2 text-xs text-amber-800 dark:text-amber-200 bg-amber-100 dark:bg-amber-950/40 rounded-lg px-3 py-2">
+            クラウド同期は未設定です。Vercel ダッシュボードで Storage（KV）をプロジェクトに接続してください。
+          </p>
+        ) : null}
+        <label className="mt-4 block text-xs font-medium text-stone-600 dark:text-stone-300">
+          家族コード
+        </label>
+        <input
+          type="text"
+          value={syncCodeInput}
+          onChange={(e) => setSyncCodeInput(e.target.value.toUpperCase())}
+          placeholder="例: NAGOYA42"
+          autoCapitalize="characters"
+          className="mt-1 w-full rounded-xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 px-3 py-3 text-base font-mono tracking-wider"
+        />
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={handleSaveSyncCode}
+            className="rounded-xl bg-orange-500 text-white font-bold py-3 active:scale-[0.98] min-h-11"
+          >
+            コードを保存
+          </button>
+          <button
+            type="button"
+            onClick={handleNewSyncCode}
+            className="rounded-xl border-2 border-stone-200 dark:border-stone-700 font-bold py-3 text-stone-700 dark:text-stone-200 active:scale-[0.98] min-h-11"
+          >
+            新規発行
+          </button>
+        </div>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={handleCopySyncCode}
+            disabled={!syncCodeInput.trim()}
+            className="rounded-xl border-2 border-stone-200 dark:border-stone-700 py-2 text-sm font-medium disabled:opacity-50 min-h-11"
+          >
+            📋 コピー
+          </button>
+          <button
+            type="button"
+            onClick={handleSyncNow}
+            disabled={syncBusy || syncAvailable === false}
+            className="rounded-xl bg-green-600 text-white font-bold py-2 text-sm disabled:opacity-50 active:scale-[0.98] min-h-11"
+          >
+            {syncBusy ? "同期中…" : "🔄 今すぐ同期"}
+          </button>
+        </div>
+        {syncMeta.lastSyncedAt ? (
+          <p className="mt-2 text-xs text-stone-500 dark:text-stone-400">
+            最終同期:{" "}
+            {new Date(syncMeta.lastSyncedAt).toLocaleString("ja-JP", {
+              month: "short",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
+        ) : null}
+        {syncMeta.lastError ? (
+          <p className="mt-1 text-xs text-red-600 dark:text-red-400">{syncMeta.lastError}</p>
+        ) : null}
+        <button
+          type="button"
+          onClick={handleClearSyncCode}
+          className="mt-3 w-full text-xs text-stone-500 dark:text-stone-400 underline"
+        >
+          この端末の家族コードを解除
+        </button>
+      </section>
+
+      <section className="mt-5 rounded-3xl bg-white dark:bg-stone-800 px-4 py-5 shadow-sm">
         <h2 className="font-bold text-stone-800 dark:text-stone-100 mb-3">
           デフォルトの家族構成
         </h2>

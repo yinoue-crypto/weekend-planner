@@ -129,3 +129,13 @@ export type HomeBase = {
   lat: number;
   lng: number;
 };
+
+/** 家族コードで端末間共有するデータ（v1） */
+export type FamilySyncPayload = {
+  version: 1;
+  updatedAt: string;
+  family: FamilyProfile;
+  home: HomeBase;
+  favorites: Place[];
+  visits: VisitRecord[];
+};
