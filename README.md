@@ -78,7 +78,15 @@ npm run build    # 本番ビルドの確認
 
 ## デプロイ
 
-`main` ブランチへの push で Vercel が自動デプロイします。
+`main` ブランチへの push で **Vercel が自動デプロイ** します。
+
+### 初回だけ（Vercel で GitHub 連携）
+
+1. https://vercel.com/new/import?s=https%3A%2F%2Fgithub.com%2Fyinoue-crypto%2Fweekend-planner を開く
+2. **Import** → **Deploy**
+3. 以後は `git push origin main` だけで本番 URL が更新されます
+
+詳細は [`DEPLOY.md`](DEPLOY.md) を参照。
 
 手動デプロイする場合:
 

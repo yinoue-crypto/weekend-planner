@@ -1,7 +1,14 @@
 // Lightweight service worker for offline shell.
 // Strategy: network-first for navigations, cache-first for static assets.
-const CACHE = "weekend-planner-v1";
-const PRECACHE = ["/", "/manifest.json", "/icons/icon-192.svg", "/icons/icon-512.svg"];
+const CACHE = "weekend-planner-v2";
+const PRECACHE = [
+  "/",
+  "/manifest.json",
+  "/icons/apple-touch-icon.png",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png",
+  "/icons/icon-maskable-512.png",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

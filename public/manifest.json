@@ -4,22 +4,34 @@
   "description": "気分と天気と家族構成をタップするだけで、今週末の行き先を3〜5件提案します。",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fefce8",
-  "theme_color": "#f97316",
+  "background_color": "#FFF7ED",
+  "theme_color": "#FB923C",
   "orientation": "portrait",
   "lang": "ja",
   "icons": [
     {
-      "src": "/icons/icon-192.svg",
+      "src": "/icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-512.svg",
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
