@@ -211,17 +211,25 @@ export function addExcluded(
     ...current,
   ];
   writeJSON(KEYS.excluded, next);
+  notifyDataChangedIfBrowser();
   return next;
 }
 
 export function removeExcluded(placeId: string): ExcludedPlace[] {
   const next = loadExcluded().filter((e) => e.placeId !== placeId);
   writeJSON(KEYS.excluded, next);
+  notifyDataChangedIfBrowser();
   return next;
 }
 
 export function clearExcluded(): void {
   writeJSON(KEYS.excluded, []);
+  notifyDataChangedIfBrowser();
+}
+
+export function saveExcluded(excluded: ExcludedPlace[]): void {
+  writeJSON(KEYS.excluded, excluded);
+  notifyDataChangedIfBrowser();
 }
 
 export function saveLastSession<T>(session: T): void {
@@ -255,7 +263,7 @@ export function importAll(json: string): boolean {
     if (data.home) saveHome(data.home);
     if (data.favorites) saveFavorites(data.favorites);
     if (data.visits) saveVisits(normalizeVisits(data.visits));
-    if (data.excluded) writeJSON(KEYS.excluded, data.excluded);
+    if (data.excluded) saveExcluded(data.excluded);
     if (typeof data.syncCode === "string" && data.syncCode.trim()) {
       saveSyncCode(data.syncCode);
     }

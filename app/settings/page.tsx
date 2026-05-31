@@ -274,7 +274,7 @@ export default function SettingsPage() {
           📱 家族で共有（複数のスマホ）
         </h2>
         <p className="mt-1 text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
-          同じ「家族コード」を入れた端末で、お気に入り・行った！・自宅・家族構成が自動で揃います。
+          同じ「家族コード」を入れた端末で、お気に入り・行った！・除外リスト・自宅・家族構成が自動で揃います。
           コードは家族だけに共有してください。
         </p>
 

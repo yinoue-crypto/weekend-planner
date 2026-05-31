@@ -146,4 +146,5 @@ export type FamilySyncPayload = {
   home: HomeBase;
   favorites: Place[];
   visits: VisitRecord[];
+  excluded: ExcludedPlace[];
 };

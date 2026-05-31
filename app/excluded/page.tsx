@@ -21,7 +21,16 @@ export default function ExcludedPage() {
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    setExcluded(loadExcluded());
+    function refresh() {
+      setExcluded(loadExcluded());
+    }
+    refresh();
+    window.addEventListener("focus", refresh);
+    window.addEventListener("weekend-planner-data-changed", refresh);
+    return () => {
+      window.removeEventListener("focus", refresh);
+      window.removeEventListener("weekend-planner-data-changed", refresh);
+    };
   }, []);
 
   function flash(msg: string) {

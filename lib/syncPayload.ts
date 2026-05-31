@@ -1,9 +1,11 @@
-import type { FamilySyncPayload, Place, VisitRecord } from "./types";
+import type { ExcludedPlace, FamilySyncPayload, Place, VisitRecord } from "./types";
 import {
+  loadExcluded,
   loadFamily,
   loadFavorites,
   loadHome,
   loadVisits,
+  saveExcluded,
   saveFamily,
   saveFavorites,
   saveHome,
@@ -21,6 +23,7 @@ export function buildSyncPayload(): FamilySyncPayload {
     home: loadHome(),
     favorites: loadFavorites(),
     visits: loadVisits(),
+    excluded: loadExcluded(),
   };
 }
 
@@ -45,6 +48,19 @@ export function mergeFavorites(a: Place[], b: Place[]): Place[] {
   return [...map.values()];
 }
 
+export function mergeExcluded(a: ExcludedPlace[], b: ExcludedPlace[]): ExcludedPlace[] {
+  const map = new Map<string, ExcludedPlace>();
+  for (const e of [...a, ...b]) {
+    const existing = map.get(e.placeId);
+    if (!existing || new Date(e.excludedAt) > new Date(existing.excludedAt)) {
+      map.set(e.placeId, e);
+    }
+  }
+  return [...map.values()].sort(
+    (x, y) => new Date(y.excludedAt).getTime() - new Date(x.excludedAt).getTime(),
+  );
+}
+
 export function mergeSyncPayload(
   local: FamilySyncPayload,
   remote: FamilySyncPayload,
@@ -59,6 +75,7 @@ export function mergeSyncPayload(
     home: remoteTime > localTime ? remote.home : local.home,
     favorites: mergeFavorites(local.favorites, remote.favorites),
     visits: mergeVisits(local.visits, remote.visits),
+    excluded: mergeExcluded(local.excluded, remote.excluded),
   };
 }
 
@@ -67,6 +84,7 @@ export function applySyncPayload(payload: FamilySyncPayload): void {
   saveHome(payload.home);
   saveFavorites(payload.favorites);
   saveVisits(normalizeVisits(payload.visits as unknown[]));
+  saveExcluded(payload.excluded);
 }
 
 export function parseSyncPayload(raw: unknown): FamilySyncPayload | null {
@@ -83,5 +101,6 @@ export function parseSyncPayload(raw: unknown): FamilySyncPayload | null {
     home: p.home,
     favorites: p.favorites,
     visits: normalizeVisits(p.visits as unknown[]),
+    excluded: Array.isArray(p.excluded) ? p.excluded : [],
   };
 }
