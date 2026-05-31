@@ -544,6 +544,19 @@ export default function SettingsPage() {
         <p>Android: Chromeで開いて メニュー → アプリをインストール</p>
       </section>
 
+      <p className="mt-6 text-center text-[11px] text-stone-400 dark:text-stone-500 leading-relaxed">
+        スポットデータの一部は{" "}
+        <a
+          href="https://www.openstreetmap.org/copyright"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          OpenStreetMap
+        </a>{" "}
+        コントリビューターによる © OpenStreetMap（ODbL）
+      </p>
+
       {message ? (
         <div className="fixed inset-x-0 bottom-6 mx-auto max-w-md px-5 z-50">
           <div className="rounded-2xl bg-green-500 text-white px-4 py-3 shadow-xl text-center font-bold">

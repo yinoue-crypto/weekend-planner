@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import VisitedList from "@/components/VisitedList";
 import WeatherBanner from "@/components/WeatherBanner";
 import { getUniqueVisits } from "@/lib/visits";
+import { getPlaceCatalogStats } from "@/lib/places";
 import { NAGOYA_DEFAULT, loadFavorites, loadHome, loadVisits } from "@/lib/storage";
 import type { HomeBase, VisitRecord } from "@/lib/types";
 
@@ -28,6 +29,7 @@ export default function HomePage() {
   const [visitedOpen, setVisitedOpen] = useState(false);
   const weekend = isWeekend();
   const label = weekendLabel();
+  const catalog = getPlaceCatalogStats();
 
   useEffect(() => {
     setHome(loadHome());
@@ -65,6 +67,9 @@ export default function HomePage() {
         </h1>
         <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">
           家族でどこ行く？ をタップで決める
+        </p>
+        <p className="mt-2 text-xs text-stone-500 dark:text-stone-400">
+          名古屋圏 {catalog.total}スポット（厳選{catalog.curated}・OSM{catalog.osm}）
         </p>
       </header>
 
