@@ -12,6 +12,7 @@ import {
   NAGOYA_DEFAULT,
   loadFamily,
   loadHome,
+  loadLastSession,
   saveFamily,
   saveLastSession,
 } from "@/lib/storage";
@@ -23,8 +24,10 @@ import type {
   Mood,
   SessionChoices,
   Transport,
+  TravelTimeRange,
   WeatherSnapshot,
 } from "@/lib/types";
+import { DEFAULT_TRAVEL_TIME_RANGE, normalizeTravelTimeRange } from "@/lib/types";
 
 const TOTAL_STEPS = 4;
 
@@ -37,12 +40,22 @@ export default function DecidePage() {
   const [duration, setDuration] = useState<Duration>("half");
   const [budget, setBudget] = useState<Budget>("low");
   const [transport, setTransport] = useState<Transport>("car");
+  const [travelTimeRange, setTravelTimeRange] = useState<TravelTimeRange>(
+    DEFAULT_TRAVEL_TIME_RANGE,
+  );
   const [preferIndoor, setPreferIndoor] = useState(false);
   const [weather, setWeather] = useState<WeatherSnapshot | null>(null);
 
   useEffect(() => {
     setFamily(loadFamily());
     setHome(loadHome());
+    const last = loadLastSession<{ choices?: SessionChoices }>();
+    if (last?.choices?.travelTimeRange) {
+      setTravelTimeRange(normalizeTravelTimeRange(last.choices.travelTimeRange));
+    }
+    if (last?.choices?.transport) {
+      setTransport(last.choices.transport);
+    }
   }, []);
 
   const familyValid = family.members.length > 0;
@@ -66,6 +79,7 @@ export default function DecidePage() {
       duration,
       budget,
       transport,
+      travelTimeRange: normalizeTravelTimeRange(travelTimeRange),
       preferIndoor,
     };
     saveLastSession({ choices: session, weather });
@@ -118,10 +132,12 @@ export default function DecidePage() {
             duration={duration}
             budget={budget}
             transport={transport}
+            travelTimeRange={travelTimeRange}
             onChange={(next) => {
               if (next.duration) setDuration(next.duration);
               if (next.budget) setBudget(next.budget);
               if (next.transport) setTransport(next.transport);
+              if (next.travelTimeRange) setTravelTimeRange(next.travelTimeRange);
             }}
           />
         </StepShell>

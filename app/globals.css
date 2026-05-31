@@ -58,3 +58,41 @@ button {
 .chip-selected {
   animation: chipPop 180ms ease-out;
 }
+
+/* 移動時間レンジ（二重スライダー） */
+.travel-time-range {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.travel-time-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: auto;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  background: #f97316;
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.2);
+  cursor: pointer;
+}
+
+.travel-time-range::-moz-range-thumb {
+  pointer-events: auto;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  background: #f97316;
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.2);
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+  .travel-time-range::-webkit-slider-thumb {
+    border-color: #292524;
+  }
+  .travel-time-range::-moz-range-thumb {
+    border-color: #292524;
+  }
+}

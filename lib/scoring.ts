@@ -1,4 +1,4 @@
-import { distanceKm } from "./distance";
+import { distanceKm, estimateTravelMinutes, formatTravelMinutes } from "./distance";
 import { getUniqueVisits } from "./visits";
 import type {
   AgeGroup,
@@ -39,12 +39,20 @@ function passesHardFilter(
   place: Place,
   choices: SessionChoices,
   weather: WeatherSnapshot | null,
+  home: HomeBase,
 ): boolean {
   if (!place.duration.includes(choices.duration)) return false;
 
   if (BUDGET_RANK[place.budget] > BUDGET_RANK[choices.budget]) return false;
 
   if (!place.transport.includes(choices.transport)) return false;
+
+  const { minMinutes, maxMinutes } = choices.travelTimeRange;
+  const travelMinutes = estimateTravelMinutes(
+    distanceKm(home, place),
+    choices.transport,
+  );
+  if (travelMinutes < minMinutes || travelMinutes > maxMinutes) return false;
 
   const youngest = youngestAge(choices.family);
   if (place.ageMin && ageIndex(youngest) < ageIndex(place.ageMin)) return false;
@@ -105,12 +113,13 @@ function scorePlace(
   }
 
   const km = distanceKm(home, place);
-  if (km < 5) {
+  const travelMinutes = estimateTravelMinutes(km, choices.transport);
+  if (travelMinutes <= 20) {
     score += 2;
-    reasons.push(`${home.label}から近い (約${Math.round(km)}km)`);
-  } else if (km < 15) {
+    reasons.push(`${home.label}から${formatTravelMinutes(travelMinutes)}`);
+  } else if (travelMinutes <= 45) {
     score += 1;
-  } else if (km > 50) {
+  } else if (travelMinutes > 90) {
     score -= 2;
   }
 
@@ -155,7 +164,7 @@ export function rankPlaces(
   const visitedIds = new Set(getUniqueVisits(visits).map((v) => v.placeId));
   const filtered = places.filter(
     (p) =>
-      passesHardFilter(p, choices, weather) &&
+      passesHardFilter(p, choices, weather, home) &&
       !isExcludedFromSuggestions(p.id, visitedIds, favoriteIds, excludedIds),
   );
   const scored = filtered.map((p) => scorePlace(p, choices, weather, home));

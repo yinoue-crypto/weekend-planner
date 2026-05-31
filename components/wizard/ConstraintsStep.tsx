@@ -1,13 +1,20 @@
 "use client";
 
 import Chip from "./Chip";
-import type { Budget, Duration, Transport } from "@/lib/types";
+import TravelTimeRangeSlider from "./TravelTimeRangeSlider";
+import type { Budget, Duration, Transport, TravelTimeRange } from "@/lib/types";
 
 type Props = {
   duration: Duration;
   budget: Budget;
   transport: Transport;
-  onChange: (next: { duration?: Duration; budget?: Budget; transport?: Transport }) => void;
+  travelTimeRange: TravelTimeRange;
+  onChange: (next: {
+    duration?: Duration;
+    budget?: Budget;
+    transport?: Transport;
+    travelTimeRange?: TravelTimeRange;
+  }) => void;
 };
 
 const DURATION_OPTS: { value: Duration; label: string; icon: string }[] = [
@@ -32,6 +39,7 @@ export default function ConstraintsStep({
   duration,
   budget,
   transport,
+  travelTimeRange,
   onChange,
 }: Props) {
   return (
@@ -89,6 +97,12 @@ export default function ConstraintsStep({
           ))}
         </div>
       </div>
+
+      <TravelTimeRangeSlider
+        transport={transport}
+        value={travelTimeRange}
+        onChange={(travelTimeRange) => onChange({ travelTimeRange })}
+      />
     </div>
   );
 }

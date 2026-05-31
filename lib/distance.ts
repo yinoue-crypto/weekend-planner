@@ -1,4 +1,25 @@
-import type { HomeBase } from "./types";
+import type { HomeBase, Transport } from "./types";
+
+/** 直線距離から移動時間（分）を概算（市街地の平均速度想定） */
+const SPEED_KMH: Record<Transport, number> = {
+  car: 35,
+  train: 25,
+  walk: 4,
+};
+
+export function estimateTravelMinutes(km: number, transport: Transport): number {
+  if (!Number.isFinite(km) || km <= 0) return 0;
+  const speed = SPEED_KMH[transport];
+  return Math.round((km / speed) * 60);
+}
+
+export function formatTravelMinutes(minutes: number): string {
+  if (!Number.isFinite(minutes) || minutes < 0) return "";
+  if (minutes < 60) return `約${minutes}分`;
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return m > 0 ? `約${h}時間${m}分` : `約${h}時間`;
+}
 
 /** 2点間の距離（km）— 球面三角法 */
 export function distanceKm(
