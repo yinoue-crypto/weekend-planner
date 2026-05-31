@@ -115,6 +115,10 @@ export default function ResultsPage() {
           <div className="rounded-2xl bg-white dark:bg-stone-800 px-5 py-10 text-center text-stone-600 dark:text-stone-300">
             条件に合う場所が見つかりませんでした。
             <br />
+            <span className="text-xs text-stone-500 dark:text-stone-400">
+              「行った！」とお気に入りは提案に含めていません。
+            </span>
+            <br />
             <Link
               href="/decide"
               className="inline-block mt-3 text-orange-600 dark:text-orange-400 font-bold"
