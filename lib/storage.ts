@@ -4,6 +4,7 @@ import type {
   Place,
   VisitRecord,
 } from "./types";
+import { normalizeVisits } from "./visits";
 
 const KEYS = {
   family: "weekend-planner/family",
@@ -86,15 +87,29 @@ export function removeFavorite(id: string): Place[] {
 }
 
 export function loadVisits(): VisitRecord[] {
-  return readJSON<VisitRecord[]>(KEYS.visits, []);
+  const raw = readJSON<unknown[]>(KEYS.visits, []);
+  return normalizeVisits(raw);
 }
 
-export function recordVisit(placeId: string): VisitRecord[] {
+export function recordVisit(place: Pick<Place, "id" | "name" | "area" | "lat" | "lng">): VisitRecord[] {
   const visits = loadVisits();
   const next: VisitRecord[] = [
-    { placeId, visitedAt: new Date().toISOString() },
+    {
+      placeId: place.id,
+      placeName: place.name,
+      placeArea: place.area,
+      lat: place.lat,
+      lng: place.lng,
+      visitedAt: new Date().toISOString(),
+    },
     ...visits,
   ].slice(0, 100);
+  writeJSON(KEYS.visits, next);
+  return next;
+}
+
+export function removeVisit(placeId: string): VisitRecord[] {
+  const next = loadVisits().filter((v) => v.placeId !== placeId);
   writeJSON(KEYS.visits, next);
   return next;
 }

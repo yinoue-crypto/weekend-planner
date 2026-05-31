@@ -80,7 +80,7 @@ export default function ResultsPage() {
   }
 
   function handlePick(place: Place) {
-    setVisits(recordVisit(place.id));
+    setVisits(recordVisit(place));
     setPickedId(place.id);
     setTimeout(() => {
       setPickedId(null);
@@ -155,7 +155,7 @@ export default function ResultsPage() {
       {pickedId ? (
         <div className="fixed inset-x-0 bottom-6 mx-auto max-w-md px-5 z-50">
           <div className="rounded-2xl bg-green-500 text-white px-4 py-3 shadow-xl text-center font-bold">
-            ✓ 行き先を記録しました！
+            ✓ 行った！に追加しました
           </div>
         </div>
       ) : null}

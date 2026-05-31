@@ -111,6 +111,10 @@ export type ScoredPlace = {
 
 export type VisitRecord = {
   placeId: string;
+  placeName: string;
+  placeArea: string;
+  lat: number;
+  lng: number;
   visitedAt: string;
 };
 

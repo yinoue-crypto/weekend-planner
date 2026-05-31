@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import VisitedList from "@/components/VisitedList";
 import WeatherBanner from "@/components/WeatherBanner";
-import { NAGOYA_DEFAULT, loadHome } from "@/lib/storage";
-import type { HomeBase } from "@/lib/types";
+import { getUniqueVisits } from "@/lib/visits";
+import { NAGOYA_DEFAULT, loadHome, loadVisits } from "@/lib/storage";
+import type { HomeBase, VisitRecord } from "@/lib/types";
 
 function isWeekend(d: Date = new Date()): boolean {
   const day = d.getDay();
@@ -21,11 +23,21 @@ function weekendLabel(d: Date = new Date()): string {
 
 export default function HomePage() {
   const [home, setHome] = useState<HomeBase>(NAGOYA_DEFAULT);
+  const [visited, setVisited] = useState<VisitRecord[]>([]);
   const weekend = isWeekend();
   const label = weekendLabel();
 
   useEffect(() => {
     setHome(loadHome());
+    setVisited(getUniqueVisits(loadVisits()));
+  }, []);
+
+  useEffect(() => {
+    function onFocus() {
+      setVisited(getUniqueVisits(loadVisits()));
+    }
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
   }, []);
 
   return (
@@ -63,6 +75,20 @@ export default function HomePage() {
           {weekend ? "5分以内・タップだけで完了" : "天気と気分で3〜5件提案"}
         </div>
       </Link>
+
+      <section className="mt-6 rounded-3xl bg-green-50/80 dark:bg-stone-800/80 border-2 border-green-100 dark:border-stone-700 px-4 py-4">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg font-bold text-stone-900 dark:text-stone-100">
+            行った！
+          </h2>
+          {visited.length > 0 ? (
+            <span className="text-xs font-medium text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-950/50 px-2 py-1 rounded-full">
+              {visited.length}件
+            </span>
+          ) : null}
+        </div>
+        <VisitedList visits={visited} compact />
+      </section>
 
       <nav className="mt-6 grid grid-cols-2 gap-3">
         <Link

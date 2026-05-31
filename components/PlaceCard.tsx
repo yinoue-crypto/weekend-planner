@@ -131,9 +131,9 @@ export default function PlaceCard({
         <button
           type="button"
           onClick={() => onPick(place)}
-          className="py-3 text-center text-sm font-bold text-white bg-orange-500 hover:bg-orange-600 active:scale-[0.98]"
+          className="py-3 text-center text-sm font-bold text-white bg-green-600 hover:bg-green-700 active:scale-[0.98]"
         >
-          ✓ ここにする
+          行った！
         </button>
       </div>
     </div>

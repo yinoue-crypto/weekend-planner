@@ -126,10 +126,11 @@ function scorePlace(
     const daysAgo =
       (Date.now() - new Date(recentVisit.visitedAt).getTime()) / (1000 * 60 * 60 * 24);
     if (daysAgo < 30) {
-      score -= 5;
-      reasons.push(`最近行ったばかり (${Math.floor(daysAgo)}日前)`);
+      score -= 8;
+      reasons.push(`行った！済み (${Math.floor(daysAgo)}日前)`);
     } else if (daysAgo < 90) {
-      score -= 2;
+      score -= 4;
+      reasons.push("最近行った");
     }
   }
 

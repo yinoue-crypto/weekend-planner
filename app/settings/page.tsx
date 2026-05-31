@@ -150,9 +150,9 @@ export default function SettingsPage() {
   }
 
   function handleClearHistory() {
-    if (confirm("訪問履歴をすべて削除しますか？")) {
+    if (confirm("「行った！」リストをすべて削除しますか？")) {
       clearVisits();
-      flash("履歴を削除しました");
+      flash("行った！リストを削除しました");
     }
   }
 
@@ -311,7 +311,7 @@ export default function SettingsPage() {
             onClick={handleClearHistory}
             className="rounded-xl border-2 border-red-200 dark:border-red-900 py-2 text-sm font-medium text-red-700 dark:text-red-300"
           >
-            🗑 履歴を削除
+            🗑 行った！を削除
           </button>
         </div>
         <textarea
