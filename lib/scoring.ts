@@ -137,8 +137,13 @@ function isExcludedFromSuggestions(
   placeId: string,
   visitedIds: Set<string>,
   favoriteIds: Set<string>,
+  excludedIds: Set<string>,
 ): boolean {
-  return visitedIds.has(placeId) || favoriteIds.has(placeId);
+  return (
+    visitedIds.has(placeId) ||
+    favoriteIds.has(placeId) ||
+    excludedIds.has(placeId)
+  );
 }
 
 export type RankOptions = {
@@ -153,6 +158,7 @@ export function rankPlaces(
   home: HomeBase,
   visits: VisitRecord[],
   favoriteIds: Set<string>,
+  excludedIds: Set<string> = new Set(),
   options: RankOptions = {},
 ): ScoredPlace[] {
   const { limit = 5, jitter = true } = options;
@@ -160,7 +166,7 @@ export function rankPlaces(
   const filtered = places.filter(
     (p) =>
       passesHardFilter(p, choices, weather) &&
-      !isExcludedFromSuggestions(p.id, visitedIds, favoriteIds),
+      !isExcludedFromSuggestions(p.id, visitedIds, favoriteIds, excludedIds),
   );
   const scored = filtered.map((p) => scorePlace(p, choices, weather, home));
 

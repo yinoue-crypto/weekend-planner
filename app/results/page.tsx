@@ -7,7 +7,9 @@ import PlaceCard from "@/components/PlaceCard";
 import { getAllPlaces } from "@/lib/places";
 import { rankPlaces } from "@/lib/scoring";
 import {
+  addExcluded,
   addFavorite,
+  loadExcluded,
   loadFavorites,
   loadHome,
   loadLastSession,
@@ -16,6 +18,7 @@ import {
   removeFavorite,
 } from "@/lib/storage";
 import type {
+  ExcludedPlace,
   HomeBase,
   Place,
   ScoredPlace,
@@ -35,8 +38,10 @@ export default function ResultsPage() {
   const [home, setHome] = useState<HomeBase | null>(null);
   const [favorites, setFavorites] = useState<Place[]>([]);
   const [visits, setVisits] = useState<VisitRecord[]>([]);
+  const [excluded, setExcluded] = useState<ExcludedPlace[]>([]);
   const [reshuffleKey, setReshuffleKey] = useState(0);
   const [pickedId, setPickedId] = useState<string | null>(null);
+  const [excludedToast, setExcludedToast] = useState<string | null>(null);
 
   useEffect(() => {
     const last = loadLastSession<LastSession>();
@@ -48,11 +53,17 @@ export default function ResultsPage() {
     setHome(loadHome());
     setFavorites(loadFavorites());
     setVisits(loadVisits());
+    setExcluded(loadExcluded());
   }, [router]);
 
   const favoriteIds = useMemo(
     () => new Set(favorites.map((p) => p.id)),
     [favorites],
+  );
+
+  const excludedIds = useMemo(
+    () => new Set(excluded.map((e) => e.placeId)),
+    [excluded],
   );
 
   const ranked: ScoredPlace[] = useMemo(() => {
@@ -65,11 +76,12 @@ export default function ResultsPage() {
       home,
       visits,
       favoriteIds,
+      excludedIds,
       { limit: 5, jitter: true },
     );
     // reshuffleKey forces re-shuffle when "別の候補" is tapped
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session, home, visits, favoriteIds, reshuffleKey, favorites]);
+  }, [session, home, visits, favoriteIds, excludedIds, reshuffleKey, favorites]);
 
   function handleToggleFavorite(place: Place) {
     if (favoriteIds.has(place.id)) {
@@ -85,6 +97,12 @@ export default function ResultsPage() {
     setTimeout(() => {
       setPickedId(null);
     }, 2500);
+  }
+
+  function handleExclude(place: Place) {
+    setExcluded(addExcluded(place));
+    setExcludedToast(`「${place.name}」を除外しました`);
+    setTimeout(() => setExcludedToast(null), 2500);
   }
 
   if (!session || !home) {
@@ -108,6 +126,14 @@ export default function ResultsPage() {
         <p className="text-sm text-stone-600 dark:text-stone-300">
           {ranked.length}件をスコア順に表示
         </p>
+        {excluded.length > 0 ? (
+          <Link
+            href="/excluded"
+            className="inline-block mt-2 text-sm font-medium text-orange-600 dark:text-orange-400"
+          >
+            除外リスト（{excluded.length}件）→
+          </Link>
+        ) : null}
       </header>
 
       <main className="px-5 mt-5 space-y-4">
@@ -116,7 +142,7 @@ export default function ResultsPage() {
             条件に合う場所が見つかりませんでした。
             <br />
             <span className="text-xs text-stone-500 dark:text-stone-400">
-              「行った！」とお気に入りは提案に含めていません。
+              「行った！」・お気に入り・除外リストは提案に含めていません。
             </span>
             <br />
             <Link
@@ -134,6 +160,7 @@ export default function ResultsPage() {
               rank={i + 1}
               favorited={favoriteIds.has(scored.place.id)}
               onToggleFavorite={handleToggleFavorite}
+              onExclude={handleExclude}
               onPick={handlePick}
             />
           ))
@@ -160,6 +187,17 @@ export default function ResultsPage() {
         <div className="fixed inset-x-0 bottom-6 mx-auto max-w-md px-5 z-50">
           <div className="rounded-2xl bg-green-500 text-white px-4 py-3 shadow-xl text-center font-bold">
             ✓ 行った！に追加しました
+          </div>
+        </div>
+      ) : null}
+
+      {excludedToast ? (
+        <div className="fixed inset-x-0 bottom-6 mx-auto max-w-md px-5 z-50">
+          <div className="rounded-2xl bg-stone-800 dark:bg-stone-700 text-white px-4 py-3 shadow-xl text-center text-sm font-bold">
+            {excludedToast}
+            <Link href="/excluded" className="block mt-1 text-orange-300 font-medium">
+              除外リストを見る
+            </Link>
           </div>
         </div>
       ) : null}
