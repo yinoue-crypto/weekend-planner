@@ -142,6 +142,7 @@ function isExcludedFromSuggestions(
 }
 
 export type RankOptions = {
+  /** 省略時は条件に合う候補をすべて返す */
   limit?: number;
   jitter?: boolean;
 };
@@ -155,7 +156,7 @@ export function rankPlaces(
   favoriteIds: Set<string>,
   options: RankOptions = {},
 ): ScoredPlace[] {
-  const { limit = 5, jitter = true } = options;
+  const { limit, jitter = true } = options;
   const visitedIds = new Set(getUniqueVisits(visits).map((v) => v.placeId));
   const filtered = places.filter(
     (p) =>
@@ -170,5 +171,5 @@ export function rankPlaces(
     return bScore - aScore;
   });
 
-  return scored.slice(0, limit);
+  return limit !== undefined ? scored.slice(0, limit) : scored;
 }
