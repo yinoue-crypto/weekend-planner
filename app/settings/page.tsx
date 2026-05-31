@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import FamilySyncSetupGuide from "@/components/FamilySyncSetupGuide";
 import FamilyStep from "@/components/wizard/FamilyStep";
 import {
   checkSyncAvailable,
@@ -51,6 +52,7 @@ export default function SettingsPage() {
   const [syncCodeInput, setSyncCodeInput] = useState("");
   const [syncAvailable, setSyncAvailable] = useState<boolean | null>(null);
   const [syncBusy, setSyncBusy] = useState(false);
+  const [syncRechecking, setSyncRechecking] = useState(false);
   const [syncMeta, setSyncMeta] = useState(loadSyncMeta());
 
   useEffect(() => {
@@ -194,6 +196,18 @@ export default function SettingsPage() {
     setSyncMeta(loadSyncMeta());
   }
 
+  async function handleRecheckSync() {
+    setSyncRechecking(true);
+    try {
+      const ok = await checkSyncAvailable();
+      setSyncAvailable(ok);
+      if (ok) flash("クラウド同期が使えるようになりました！");
+      else flash("まだ未設定です。Vercel で KV を接続して Redeploy してください");
+    } finally {
+      setSyncRechecking(false);
+    }
+  }
+
   function handleSaveSyncCode() {
     const code = syncCodeInput.trim().toUpperCase();
     if (!isValidFamilyCode(code)) {
@@ -263,11 +277,13 @@ export default function SettingsPage() {
           同じ「家族コード」を入れた端末で、お気に入り・行った！・自宅・家族構成が自動で揃います。
           コードは家族だけに共有してください。
         </p>
-        {syncAvailable === false ? (
-          <p className="mt-2 text-xs text-amber-800 dark:text-amber-200 bg-amber-100 dark:bg-amber-950/40 rounded-lg px-3 py-2">
-            クラウド同期は未設定です。Vercel ダッシュボードで Storage（KV）をプロジェクトに接続してください。
-          </p>
-        ) : null}
+
+        <FamilySyncSetupGuide
+          syncAvailable={syncAvailable}
+          onRecheck={handleRecheckSync}
+          rechecking={syncRechecking}
+        />
+
         <label className="mt-4 block text-xs font-medium text-stone-600 dark:text-stone-300">
           家族コード
         </label>
