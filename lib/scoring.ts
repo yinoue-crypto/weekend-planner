@@ -1,3 +1,4 @@
+import { getUniqueVisits } from "./visits";
 import type {
   AgeGroup,
   FamilyProfile,
@@ -80,8 +81,6 @@ function scorePlace(
   choices: SessionChoices,
   weather: WeatherSnapshot | null,
   home: HomeBase,
-  visits: VisitRecord[],
-  favoriteIds: Set<string>,
 ): ScoredPlace {
   let score = 0;
   const reasons: string[] = [];
@@ -116,24 +115,6 @@ function scorePlace(
     }
   }
 
-  if (favoriteIds.has(place.id)) {
-    score += 2;
-    reasons.push("お気に入り");
-  }
-
-  const recentVisit = visits.find((v) => v.placeId === place.id);
-  if (recentVisit) {
-    const daysAgo =
-      (Date.now() - new Date(recentVisit.visitedAt).getTime()) / (1000 * 60 * 60 * 24);
-    if (daysAgo < 30) {
-      score -= 8;
-      reasons.push(`行った！済み (${Math.floor(daysAgo)}日前)`);
-    } else if (daysAgo < 90) {
-      score -= 4;
-      reasons.push("最近行った");
-    }
-  }
-
   const km = distanceKm(home, place);
   if (km < 5) {
     score += 2;
@@ -149,11 +130,15 @@ function scorePlace(
     reasons.push("入場無料");
   }
 
-  if (place.source === "favorite") {
-    score += 1;
-  }
-
   return { place, score, reasons };
+}
+
+function isExcludedFromSuggestions(
+  placeId: string,
+  visitedIds: Set<string>,
+  favoriteIds: Set<string>,
+): boolean {
+  return visitedIds.has(placeId) || favoriteIds.has(placeId);
 }
 
 export type RankOptions = {
@@ -171,10 +156,13 @@ export function rankPlaces(
   options: RankOptions = {},
 ): ScoredPlace[] {
   const { limit = 5, jitter = true } = options;
-  const filtered = places.filter((p) => passesHardFilter(p, choices, weather));
-  const scored = filtered.map((p) =>
-    scorePlace(p, choices, weather, home, visits, favoriteIds),
+  const visitedIds = new Set(getUniqueVisits(visits).map((v) => v.placeId));
+  const filtered = places.filter(
+    (p) =>
+      passesHardFilter(p, choices, weather) &&
+      !isExcludedFromSuggestions(p.id, visitedIds, favoriteIds),
   );
+  const scored = filtered.map((p) => scorePlace(p, choices, weather, home));
 
   scored.sort((a, b) => {
     const aScore = a.score + (jitter ? Math.random() * 0.5 : 0);
