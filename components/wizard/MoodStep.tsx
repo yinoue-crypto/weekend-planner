@@ -21,6 +21,7 @@ const MOOD_ICONS: Record<Mood, string> = {
   shopping: "🛍️",
   learn: "🔬",
   thrill: "🎢",
+  onsen: "♨️",
 };
 
 const MOOD_ORDER: Mood[] = [
@@ -29,6 +30,7 @@ const MOOD_ORDER: Mood[] = [
   "nature",
   "culture",
   "food",
+  "onsen",
   "shopping",
   "learn",
   "thrill",
