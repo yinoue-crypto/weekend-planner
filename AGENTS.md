@@ -46,6 +46,7 @@ weekend-planner/
 | やりたいこと | 触るファイル |
 |--------------|--------------|
 | スポットを増やす | [`data/seed-places-nagoya.json`](data/seed-places-nagoya.json) — 既存形式に揃え、タグは `PlaceTag` 型の語彙のみ |
+| OSM から一括取り込み | `npm run import:osm` → [`data/seed-places-osm.json`](data/seed-places-osm.json)（ルールは [`lib/osmMapping.ts`](lib/osmMapping.ts)） |
 | スコアの重みを調整 | [`lib/scoring.ts`](lib/scoring.ts) の `scorePlace` 関数 |
 | ウィザードのステップ追加/変更 | [`app/decide/page.tsx`](app/decide/page.tsx) と [`components/wizard/`](components/wizard/) |
 | 気分カテゴリの追加 | [`lib/types.ts`](lib/types.ts) の `Mood` 型 + `MOOD_LABELS` + [`components/wizard/MoodStep.tsx`](components/wizard/MoodStep.tsx) |
@@ -60,6 +61,7 @@ npm install            # 依存インストール
 npm run dev            # 開発サーバ（http://localhost:3000）
 npm run build          # 本番ビルド（必ず通すこと）
 npm run lint           # Lint
+npm run import:osm     # OSM → seed-places-osm.json（Overpass・数分）
 ```
 
 ## 設計上の制約

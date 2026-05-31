@@ -28,6 +28,18 @@ function mergePlacesById(places: Place[]): Place[] {
 
 const allSeedPlaces = mergePlacesById([...curatedSeed, ...osmSeed]);
 
+export function getPlaceCatalogStats(): {
+  total: number;
+  curated: number;
+  osm: number;
+} {
+  return {
+    total: allSeedPlaces.length,
+    curated: curatedSeed.length,
+    osm: osmSeed.length,
+  };
+}
+
 export function findPlaceById(id: string, extras: Place[] = []): Place | undefined {
   return [...extras, ...allSeedPlaces].find((p) => p.id === id);
 }

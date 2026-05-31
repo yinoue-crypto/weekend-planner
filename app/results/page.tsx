@@ -190,7 +190,7 @@ export default function ResultsPage() {
             条件に合う場所が見つかりませんでした。
             <br />
             <span className="text-xs text-stone-500 dark:text-stone-400">
-              「行った！」・お気に入り・除外リストは提案に含めていません。
+              「行った！」・除外リストの場所は提案に含めていません。
             </span>
             <br />
             <Link

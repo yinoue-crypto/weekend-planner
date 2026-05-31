@@ -124,6 +124,7 @@ function scorePlace(
   choices: SessionChoices,
   weather: WeatherSnapshot | null,
   home: HomeBase,
+  favoriteIds: Set<string>,
 ): ScoredPlace {
   let score = 0;
   const reasons: string[] = [];
@@ -190,9 +191,14 @@ function scorePlace(
     reasons.push("入場無料");
   }
 
+  if (favoriteIds.has(place.id)) {
+    score += 4;
+    reasons.push("お気に入り");
+  }
+
   if (place.source === "osm") {
     score -= 2;
-    reasons.push("コミュニティ登録スポット");
+    reasons.push("コミュニティ登録");
   }
 
   return { place, score, reasons };
@@ -250,14 +256,9 @@ function applyRelaxAdjustments(
 function isExcludedFromSuggestions(
   placeId: string,
   visitedIds: Set<string>,
-  favoriteIds: Set<string>,
   excludedIds: Set<string>,
 ): boolean {
-  return (
-    visitedIds.has(placeId) ||
-    favoriteIds.has(placeId) ||
-    excludedIds.has(placeId)
-  );
+  return visitedIds.has(placeId) || excludedIds.has(placeId);
 }
 
 export type RankOptions = {
@@ -289,12 +290,12 @@ export function rankPlaces(
       if (seen.has(place.id)) continue;
       if (
         !passesHardFilter(place, choices, weather, home, relax) ||
-        isExcludedFromSuggestions(place.id, visitedIds, favoriteIds, excludedIds)
+        isExcludedFromSuggestions(place.id, visitedIds, excludedIds)
       ) {
         continue;
       }
 
-      const scored = scorePlace(place, choices, weather, home);
+      const scored = scorePlace(place, choices, weather, home, favoriteIds);
       applyRelaxAdjustments(scored, choices, home, relax);
       tiered.push({ tier, scored });
       seen.add(place.id);

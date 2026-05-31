@@ -71,6 +71,11 @@ export default function PlaceCard({
           <div className="flex-1 min-w-0">
             <h3 className="text-lg font-bold text-stone-900 dark:text-stone-100 leading-tight">
               {place.name}
+              {place.source === "osm" ? (
+                <span className="ml-1.5 align-middle text-[10px] font-medium text-stone-500 dark:text-stone-400 bg-stone-100 dark:bg-stone-700 px-1.5 py-0.5 rounded">
+                  OSM
+                </span>
+              ) : null}
             </h3>
             <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">{place.area}</p>
           </div>
