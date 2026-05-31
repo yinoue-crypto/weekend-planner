@@ -29,6 +29,8 @@ type LastSession = {
   weather: WeatherSnapshot | null;
 };
 
+const PAGE_SIZE = 5;
+
 export default function ResultsPage() {
   const router = useRouter();
   const [session, setSession] = useState<LastSession | null>(null);
@@ -36,6 +38,7 @@ export default function ResultsPage() {
   const [favorites, setFavorites] = useState<Place[]>([]);
   const [visits, setVisits] = useState<VisitRecord[]>([]);
   const [reshuffleKey, setReshuffleKey] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [pickedId, setPickedId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -55,7 +58,7 @@ export default function ResultsPage() {
     [favorites],
   );
 
-  const ranked: ScoredPlace[] = useMemo(() => {
+  const allRanked: ScoredPlace[] = useMemo(() => {
     if (!session || !home) return [];
     const places = getAllPlaces(favorites);
     return rankPlaces(
@@ -65,11 +68,22 @@ export default function ResultsPage() {
       home,
       visits,
       favoriteIds,
-      { limit: 5, jitter: true },
+      { jitter: true },
     );
     // reshuffleKey forces re-shuffle when "別の候補" is tapped
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, home, visits, favoriteIds, reshuffleKey, favorites]);
+
+  const ranked = useMemo(
+    () => allRanked.slice(0, visibleCount),
+    [allRanked, visibleCount],
+  );
+
+  const hasMore = visibleCount < allRanked.length;
+
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [reshuffleKey]);
 
   function handleToggleFavorite(place: Place) {
     if (favoriteIds.has(place.id)) {
@@ -106,7 +120,11 @@ export default function ResultsPage() {
           今日のおすすめ
         </h1>
         <p className="text-sm text-stone-600 dark:text-stone-300">
-          {ranked.length}件をスコア順に表示
+          {allRanked.length === 0
+            ? "候補なし"
+            : allRanked.length === ranked.length
+              ? `${ranked.length}件をスコア順に表示`
+              : `${ranked.length}件表示（全${allRanked.length}件中）`}
         </p>
       </header>
 
@@ -138,6 +156,20 @@ export default function ResultsPage() {
             />
           ))
         )}
+
+        {hasMore ? (
+          <button
+            type="button"
+            onClick={() =>
+              setVisibleCount((count) =>
+                Math.min(count + PAGE_SIZE, allRanked.length),
+              )
+            }
+            className="w-full rounded-2xl bg-orange-500 py-3 font-bold text-white active:scale-[0.98]"
+          >
+            もっと表示（あと{allRanked.length - visibleCount}件）
+          </button>
+        ) : null}
 
         <div className="grid grid-cols-2 gap-3 pt-2">
           <button
