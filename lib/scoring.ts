@@ -1,5 +1,6 @@
 import { distanceKm, estimateTravelMinutes, formatTravelMinutes } from "./distance";
 import { placeMatchesFoodCategories, sessionWantsFood } from "./food";
+import { isOnsenPlace, sessionWantsOnsen } from "./onsen";
 import { getUniqueVisits } from "./visits";
 import { FOOD_CATEGORY_LABELS } from "./types";
 import type {
@@ -109,6 +110,12 @@ function passesHardFilter(
     }
   }
 
+  if (sessionWantsOnsen(choices)) {
+    if (!isOnsenPlace(place)) return false;
+  } else if (isOnsenPlace(place)) {
+    return false;
+  }
+
   return true;
 }
 
@@ -136,6 +143,11 @@ function scorePlace(
       const labels = foodMatches.map((c) => FOOD_CATEGORY_LABELS[c]).slice(0, 2);
       reasons.push(`食べたいジャンル: ${labels.join("・")}`);
     }
+  }
+
+  if (sessionWantsOnsen(choices) && isOnsenPlace(place)) {
+    score += 5;
+    reasons.push("温泉・スーパー銭湯");
   }
 
   if (weather) {

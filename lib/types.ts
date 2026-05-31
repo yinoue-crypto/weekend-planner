@@ -6,7 +6,8 @@ export type Mood =
   | "food"
   | "shopping"
   | "learn"
-  | "thrill";
+  | "thrill"
+  | "onsen";
 
 export const MOOD_LABELS: Record<Mood, string> = {
   relax: "のんびり",
@@ -17,6 +18,7 @@ export const MOOD_LABELS: Record<Mood, string> = {
   shopping: "ショッピング",
   learn: "学び・体験",
   thrill: "ワクワク",
+  onsen: "温泉",
 };
 
 /** グルメ検索時の料理ジャンル（飲食店のみに付与） */

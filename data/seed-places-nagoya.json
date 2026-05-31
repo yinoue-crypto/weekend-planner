@@ -1027,7 +1027,8 @@
     ],
     "moods": [
       "relax",
-      "culture"
+      "culture",
+      "onsen"
     ],
     "ageMin": "elementary",
     "duration": [
@@ -1517,7 +1518,8 @@
       "kids-ok"
     ],
     "moods": [
-      "relax"
+      "relax",
+      "onsen"
     ],
     "ageMin": "toddler",
     "duration": [
