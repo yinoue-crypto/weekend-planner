@@ -118,6 +118,12 @@ export type VisitRecord = {
   visitedAt: string;
 };
 
+/** 「行った！」一覧の地域グループ（名古屋は区、その他は市など） */
+export type VisitRegionGroup = {
+  region: string;
+  visits: VisitRecord[];
+};
+
 export type HomeBase = {
   label: string;
   lat: number;

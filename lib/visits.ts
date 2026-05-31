@@ -1,4 +1,26 @@
-import type { VisitRecord } from "./types";
+import type { VisitRecord, VisitRegionGroup } from "./types";
+
+/** 名古屋市16区（seed の area が区名のみのもの） */
+export const NAGOYA_WARDS = [
+  "千種区",
+  "東区",
+  "北区",
+  "西区",
+  "中村区",
+  "中区",
+  "昭和区",
+  "瑞穂区",
+  "熱田区",
+  "中川区",
+  "港区",
+  "南区",
+  "守山区",
+  "緑区",
+  "名東区",
+  "天白区",
+] as const;
+
+const NAGOYA_WARD_SET = new Set<string>(NAGOYA_WARDS);
 
 function normalizeVisit(raw: unknown): VisitRecord | null {
   if (!raw || typeof raw !== "object") return null;
@@ -30,6 +52,46 @@ export function getUniqueVisits(visits: VisitRecord[]): VisitRecord[] {
   return Array.from(map.values()).sort(
     (a, b) => new Date(b.visitedAt).getTime() - new Date(a.visitedAt).getTime(),
   );
+}
+
+/** 一覧の地域ラベル（名古屋は区、それ以外は市名など） */
+export function getVisitRegion(area: string): string {
+  const trimmed = area.trim();
+  if (!trimmed || trimmed === "登録地") return "その他";
+  if (NAGOYA_WARD_SET.has(trimmed)) return trimmed;
+  if (trimmed.endsWith("市")) return trimmed;
+  return trimmed;
+}
+
+function compareRegions(a: string, b: string): number {
+  const aWard = NAGOYA_WARDS.indexOf(a as (typeof NAGOYA_WARDS)[number]);
+  const bWard = NAGOYA_WARDS.indexOf(b as (typeof NAGOYA_WARDS)[number]);
+  if (aWard >= 0 && bWard >= 0) return aWard - bWard;
+  if (aWard >= 0) return -1;
+  if (bWard >= 0) return 1;
+  if (a === "その他") return 1;
+  if (b === "その他") return -1;
+  return a.localeCompare(b, "ja");
+}
+
+/** 名古屋は区・その他は市単位でグループ化（区内は訪問日の新しい順） */
+export function groupVisitsByRegion(visits: VisitRecord[]): VisitRegionGroup[] {
+  const map = new Map<string, VisitRecord[]>();
+  for (const v of visits) {
+    const region = getVisitRegion(v.placeArea);
+    const list = map.get(region) ?? [];
+    list.push(v);
+    map.set(region, list);
+  }
+
+  return Array.from(map.keys())
+    .sort(compareRegions)
+    .map((region) => ({
+      region,
+      visits: (map.get(region) ?? []).sort(
+        (a, b) => new Date(b.visitedAt).getTime() - new Date(a.visitedAt).getTime(),
+      ),
+    }));
 }
 
 export function formatVisitedAt(iso: string): string {

@@ -24,6 +24,7 @@ function weekendLabel(d: Date = new Date()): string {
 export default function HomePage() {
   const [home, setHome] = useState<HomeBase>(NAGOYA_DEFAULT);
   const [visited, setVisited] = useState<VisitRecord[]>([]);
+  const [visitedOpen, setVisitedOpen] = useState(false);
   const weekend = isWeekend();
   const label = weekendLabel();
 
@@ -77,17 +78,38 @@ export default function HomePage() {
       </Link>
 
       <section className="mt-6 rounded-3xl bg-green-50/80 dark:bg-stone-800/80 border-2 border-green-100 dark:border-stone-700 px-4 py-4">
-        <div className="flex items-center justify-between mb-3">
+        <button
+          type="button"
+          onClick={() => setVisitedOpen((o) => !o)}
+          className="w-full flex items-center justify-between gap-3 min-h-11 text-left active:scale-[0.99] transition-transform"
+          aria-expanded={visitedOpen}
+          aria-controls="visited-list-panel"
+        >
           <h2 className="text-lg font-bold text-stone-900 dark:text-stone-100">
             行った！
           </h2>
-          {visited.length > 0 ? (
+          <div className="flex items-center gap-2 shrink-0">
             <span className="text-xs font-medium text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-950/50 px-2 py-1 rounded-full">
               {visited.length}件
             </span>
-          ) : null}
-        </div>
-        <VisitedList visits={visited} compact />
+            <span
+              className="text-stone-400 dark:text-stone-500 text-sm"
+              aria-hidden
+            >
+              {visitedOpen ? "▲" : "▼"}
+            </span>
+          </div>
+        </button>
+        {!visitedOpen && visited.length > 0 ? (
+          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
+            タップして地域別の一覧を表示
+          </p>
+        ) : null}
+        {visitedOpen ? (
+          <div id="visited-list-panel" className="mt-3">
+            <VisitedList visits={visited} compact grouped />
+          </div>
+        ) : null}
       </section>
 
       <nav className="mt-6 grid grid-cols-2 gap-3">
