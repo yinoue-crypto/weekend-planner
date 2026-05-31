@@ -190,6 +190,11 @@ function scorePlace(
     reasons.push("入場無料");
   }
 
+  if (place.source === "osm") {
+    score -= 2;
+    reasons.push("コミュニティ登録スポット");
+  }
+
   return { place, score, reasons };
 }
 
