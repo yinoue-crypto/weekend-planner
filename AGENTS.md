@@ -69,6 +69,7 @@ npm run lint           # Lint
 - **スマホファースト**。最小タップ高さ 44px、フォントは最低 14px、コンテナは `max-w-md`。
 - **データ型は [`lib/types.ts`](lib/types.ts) に集約**。新規型はここに足してから使う。
 - **localStorage アクセスは [`lib/storage.ts`](lib/storage.ts) 経由**。コンポーネントから直接 `localStorage.getItem` を呼ばない。
+- **端末間同期**: 設定の家族コード → [`lib/familySync.ts`](lib/familySync.ts) / [`app/api/family-sync/route.ts`](app/api/family-sync/route.ts)（要 `KV_REST_API_*`）
 
 ## Cursor Cloud specific instructions
 

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import FamilySyncProvider from "@/components/FamilySyncProvider";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 
 export const metadata: Metadata = {
@@ -41,7 +42,7 @@ export default function RootLayout({
     <html lang="ja" className="h-full">
       <body className="min-h-full antialiased">
         <div className="mx-auto max-w-md min-h-screen flex flex-col">
-          {children}
+          <FamilySyncProvider>{children}</FamilySyncProvider>
         </div>
         <ServiceWorkerRegister />
       </body>
