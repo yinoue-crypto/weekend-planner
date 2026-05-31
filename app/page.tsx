@@ -80,60 +80,59 @@ export default function HomePage() {
         </div>
       </Link>
 
-      <section className="mt-6 rounded-3xl bg-green-50/80 dark:bg-stone-800/80 border-2 border-green-100 dark:border-stone-700 px-4 py-4">
-        <button
-          type="button"
-          onClick={() => setVisitedOpen((o) => !o)}
-          className="w-full flex items-center justify-between gap-3 min-h-11 text-left active:scale-[0.99] transition-transform"
-          aria-expanded={visitedOpen}
-          aria-controls="visited-list-panel"
-        >
-          <h2 className="text-lg font-bold text-stone-900 dark:text-stone-100">
-            行った！
-          </h2>
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="text-xs font-medium text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-950/50 px-2 py-1 rounded-full">
-              {visited.length}件
-            </span>
-            <span
-              className="text-stone-400 dark:text-stone-500 text-sm"
-              aria-hidden
-            >
-              {visitedOpen ? "▲" : "▼"}
-            </span>
-          </div>
-        </button>
-        {!visitedOpen && visited.length > 0 ? (
-          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
-            タップして地域別の一覧を表示
-          </p>
-        ) : null}
-        {visitedOpen ? (
-          <div id="visited-list-panel" className="mt-3">
-            <VisitedList visits={visited} compact grouped />
-          </div>
-        ) : null}
-      </section>
-
       <nav className="mt-6 grid grid-cols-2 gap-3">
         <Link
           href="/favorites"
           className="relative rounded-2xl bg-white dark:bg-stone-800 border-2 border-stone-200 dark:border-stone-700 px-4 py-5 text-center font-bold text-stone-700 dark:text-stone-200 active:scale-[0.98] min-h-11"
         >
-          <div className="text-3xl mb-1" aria-hidden>⭐</div>
+          <div className="text-3xl mb-1" aria-hidden>
+            ⭐
+          </div>
           お気に入り
           <span className="absolute top-3 right-3 text-xs font-medium text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/50 px-2 py-1 rounded-full">
             {favoriteCount}件
           </span>
         </Link>
-        <Link
-          href="/settings"
-          className="rounded-2xl bg-white dark:bg-stone-800 border-2 border-stone-200 dark:border-stone-700 px-4 py-5 text-center font-bold text-stone-700 dark:text-stone-200 active:scale-[0.98]"
+        <button
+          type="button"
+          onClick={() => setVisitedOpen((o) => !o)}
+          className={[
+            "relative rounded-2xl bg-white dark:bg-stone-800 border-2 px-4 py-5 text-center font-bold text-stone-700 dark:text-stone-200 active:scale-[0.98] min-h-11",
+            visitedOpen
+              ? "border-green-400 dark:border-green-600 bg-green-50/50 dark:bg-green-950/20"
+              : "border-stone-200 dark:border-stone-700",
+          ].join(" ")}
+          aria-expanded={visitedOpen}
+          aria-controls="visited-list-panel"
         >
-          <div className="text-3xl mb-1" aria-hidden>⚙️</div>
-          設定
-        </Link>
+          <div className="text-3xl mb-1" aria-hidden>
+            ✨
+          </div>
+          行った！
+          <span className="absolute top-3 right-3 text-xs font-medium text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-950/50 px-2 py-1 rounded-full">
+            {visited.length}件
+          </span>
+        </button>
       </nav>
+
+      {visitedOpen ? (
+        <section
+          id="visited-list-panel"
+          className="mt-3 rounded-3xl bg-green-50/80 dark:bg-stone-800/80 border-2 border-green-100 dark:border-stone-700 px-4 py-4"
+        >
+          <VisitedList visits={visited} compact grouped />
+        </section>
+      ) : null}
+
+      <Link
+        href="/settings"
+        className="mt-3 flex items-center justify-center gap-2 rounded-2xl bg-white dark:bg-stone-800 border-2 border-stone-200 dark:border-stone-700 px-4 py-3 font-bold text-stone-700 dark:text-stone-200 active:scale-[0.98] min-h-11"
+      >
+        <span className="text-2xl" aria-hidden>
+          ⚙️
+        </span>
+        設定
+      </Link>
 
       <div className="mt-auto pt-8 text-center text-xs text-stone-400 dark:text-stone-500">
         天気: Open-Meteo / 地図: Google Maps
