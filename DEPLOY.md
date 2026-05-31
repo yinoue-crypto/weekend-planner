@@ -9,7 +9,8 @@
 2. GitHub でログイン（未連携なら Vercel アプリを GitHub にインストール）
 3. リポジトリ `yinoue-crypto/weekend-planner` を **Import**
 4. Framework: **Next.js**（自動検出）、Root Directory: **./** のまま
-5. **Deploy** を押す
+5. **Project Name** を `shuumatsu-navi` に変更（`weekend-planner` のままだと名前重複エラーになる場合あり）
+6. **Deploy** を押す
 
 これで完了です。以後はコードを `main` に push するだけで本番が更新されます。
 
@@ -22,7 +23,7 @@ git push origin main
 
 ## 本番 URL
 
-デプロイ完了後、Vercel ダッシュボードに表示される URL（例: `https://weekend-planner-xxx.vercel.app`）をスマホのホーム画面に追加してください。
+デプロイ完了後、Vercel ダッシュボードに表示される URL（例: `https://shuumatsu-navi.vercel.app`）をスマホのホーム画面に追加してください。
 
 Production Branch は **main** になっていることを確認:  
 Vercel → Project → Settings → Git → Production Branch
@@ -45,3 +46,23 @@ npx vercel --prod
 ```
 
 ※ PC 名に日本語が含まれると CLI が失敗することがあります。その場合は上記の GitHub 連携を利用してください。
+
+## トラブルシュート
+
+### `Project "weekend-planner" already exists`
+
+Vercel アカウント内に同名プロジェクトが既にあります。**どちらか**で解決できます。
+
+**方法A（おすすめ）: 別名で新規作成**
+
+Import 画面の **Project Name** を `shuumatsu-navi` など未使用の名前に変えてから Deploy。
+
+**方法B: 既存プロジェクトを GitHub に接続**
+
+1. https://vercel.com/dashboard を開く
+2. 既存の `weekend-planner` プロジェクトを開く
+3. **Settings → Git → Connect Git Repository**
+4. `yinoue-crypto/weekend-planner` を選び、Production Branch を **main** に設定
+5. **Redeploy** または `main` へ push
+
+方法B では URL は既存プロジェクトのまま（例: `https://weekend-planner-xxx.vercel.app`）です。
