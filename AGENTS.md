@@ -72,8 +72,11 @@ npm run lint           # Lint
 
 ## Cursor Cloud specific instructions
 
-- 起動時に `.cursor/environment.json` が `npm install` を実行し、`next-dev` ターミナルで `npm run dev` がポート3000で立ち上がる。
+- **Node.js 22**（`.github/workflows/ci.yml` と同じ）。`npm install` のみで依存は足りる（DB・Docker 不要）。
+- 起動時に `.cursor/environment.json` が `npm install` を実行し、`next-dev` ターミナルで `npm run dev` がポート **3000** で立ち上がる。ターミナルが無い場合は tmux で `npm run dev` を起動する。
+- **`npm run lint` は Next.js 16 では未対応**（`next lint` サブコマンドが無く、現状は失敗する）。Lint の代わりに **`npm run build`**（TypeScript チェック込み）を使う。CI も build のみ。
 - 変更を加えたら **必ず `npm run build` を通してからコミット**。型エラーで CI が落ちないように。
+- 天気バナー・ウィザード天気ステップは **Open-Meteo** へのクライアント `fetch` が必要（オフラインだと表示が空/エラーになりうる）。設定の住所ジオコードは **`/api/geocode`**（Nominatim プロキシ）がネットワーク必須。
 - UI 変更時はブラウザツールで http://localhost:3000 を開き、ホーム/ウィザード/結果のスクリーンショットを PR に添付する。
 - スポット追加など `data/seed-places-nagoya.json` を編集したら、結果ページで実際に出現することを確認する。
 - 大きな機能変更は **小さな PR に分割**。家族がスマホで気軽にマージできるサイズに留める。
