@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 type Props = {
@@ -29,18 +30,36 @@ export default function StepShell({
   return (
     <div className="flex flex-col min-h-screen">
       <div className="px-5 pt-4 safe-top">
-        <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
-          <button
-            type="button"
-            onClick={onBack}
-            disabled={!onBack}
-            className="disabled:opacity-30"
-          >
-            ← 戻る
-          </button>
-          <span>
-            ステップ {step} / {total}
-          </span>
+        <div className="flex items-center justify-between gap-3 text-xs text-stone-500 dark:text-stone-400">
+          {onBack ? (
+            <button
+              type="button"
+              onClick={onBack}
+              className="shrink-0 min-h-11 flex items-center text-stone-600 dark:text-stone-300 active:scale-[0.98]"
+            >
+              ← 戻る
+            </button>
+          ) : (
+            <Link
+              href="/"
+              className="shrink-0 min-h-11 flex items-center text-stone-600 dark:text-stone-300 active:scale-[0.98]"
+            >
+              ← ホームへ
+            </Link>
+          )}
+          <div className="flex items-center gap-3 shrink-0">
+            {onBack ? (
+              <Link
+                href="/"
+                className="min-h-11 flex items-center font-medium text-orange-600 dark:text-orange-400 active:scale-[0.98]"
+              >
+                ホーム
+              </Link>
+            ) : null}
+            <span className="tabular-nums">
+              ステップ {step} / {total}
+            </span>
+          </div>
         </div>
         <div className="mt-2 h-1.5 rounded-full bg-stone-200 dark:bg-stone-700 overflow-hidden">
           <div
