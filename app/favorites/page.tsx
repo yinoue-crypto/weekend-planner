@@ -2,15 +2,19 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { formatDistanceFromHome } from "@/lib/distance";
 import {
   addFavorite,
   loadFavorites,
+  loadHome,
+  NAGOYA_DEFAULT,
   removeFavorite,
 } from "@/lib/storage";
 import { googleMapsSearchUrl, resolveGoogleMapsInput } from "@/lib/googleMapsUrl";
-import type { Place } from "@/lib/types";
+import type { HomeBase, Place } from "@/lib/types";
 
 export default function FavoritesPage() {
+  const [home, setHome] = useState<HomeBase>(NAGOYA_DEFAULT);
   const [favorites, setFavorites] = useState<Place[]>([]);
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
@@ -18,7 +22,13 @@ export default function FavoritesPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    setFavorites(loadFavorites());
+    function refresh() {
+      setHome(loadHome());
+      setFavorites(loadFavorites());
+    }
+    refresh();
+    window.addEventListener("focus", refresh);
+    return () => window.removeEventListener("focus", refresh);
   }, []);
 
   async function handleAdd() {
@@ -73,6 +83,9 @@ export default function FavoritesPage() {
         <p className="text-sm text-stone-600 dark:text-stone-300">
           Google Mapsで見つけた場所を追加できます
         </p>
+        <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
+          距離の基準: {home.label}
+        </p>
       </header>
 
       <section className="rounded-3xl bg-white dark:bg-stone-800 px-4 py-5 shadow-sm">
@@ -116,7 +129,9 @@ export default function FavoritesPage() {
             まだお気に入りがありません
           </p>
         ) : (
-          favorites.map((p) => (
+          favorites.map((p) => {
+            const distanceLabel = formatDistanceFromHome(home, p);
+            return (
             <div
               key={p.id}
               className="rounded-2xl bg-white dark:bg-stone-800 px-4 py-3 flex items-center gap-3 shadow-sm"
@@ -125,7 +140,15 @@ export default function FavoritesPage() {
                 <div className="font-semibold text-stone-900 dark:text-stone-100 truncate">
                   {p.name}
                 </div>
-                <div className="text-xs text-stone-500 dark:text-stone-400">{p.area}</div>
+                <div className="text-xs text-stone-500 dark:text-stone-400">
+                  {p.area}
+                  {distanceLabel ? (
+                    <>
+                      <span className="text-stone-300 dark:text-stone-600"> · </span>
+                      {distanceLabel}
+                    </>
+                  ) : null}
+                </div>
               </div>
               <a
                 href={googleMapsSearchUrl(p)}
@@ -143,7 +166,8 @@ export default function FavoritesPage() {
                 削除
               </button>
             </div>
-          ))
+            );
+          })
         )}
       </section>
     </div>

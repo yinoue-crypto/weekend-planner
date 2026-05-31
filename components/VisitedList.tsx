@@ -1,11 +1,13 @@
 "use client";
 
+import { formatDistanceFromHome } from "@/lib/distance";
 import { googleMapsSearchUrl } from "@/lib/googleMapsUrl";
 import { formatVisitedAt, groupVisitsByRegion } from "@/lib/visits";
-import type { VisitRecord } from "@/lib/types";
+import type { HomeBase, VisitRecord } from "@/lib/types";
 
 type Props = {
   visits: VisitRecord[];
+  home: HomeBase;
   onRemove?: (placeId: string) => void;
   compact?: boolean;
   grouped?: boolean;
@@ -13,13 +15,16 @@ type Props = {
 
 function VisitRow({
   v,
+  home,
   onRemove,
   compact,
 }: {
   v: VisitRecord;
+  home: HomeBase;
   onRemove?: (placeId: string) => void;
   compact?: boolean;
 }) {
+  const distanceLabel = formatDistanceFromHome(home, v);
   return (
     <li
       className={[
@@ -36,6 +41,12 @@ function VisitRow({
         </div>
         <div className="text-xs text-stone-500 dark:text-stone-400">
           {formatVisitedAt(v.visitedAt)}
+          {distanceLabel ? (
+            <>
+              <span className="text-stone-300 dark:text-stone-600"> · </span>
+              {distanceLabel}
+            </>
+          ) : null}
         </div>
       </div>
       <div className="flex shrink-0 gap-1">
@@ -64,7 +75,7 @@ function VisitRow({
   );
 }
 
-export default function VisitedList({ visits, onRemove, compact, grouped }: Props) {
+export default function VisitedList({ visits, home, onRemove, compact, grouped }: Props) {
   if (visits.length === 0) {
     return (
       <p className="text-sm text-stone-500 dark:text-stone-400 py-2">
@@ -87,7 +98,7 @@ export default function VisitedList({ visits, onRemove, compact, grouped }: Prop
             </h3>
             <ul className="space-y-2">
               {g.visits.map((v) => (
-                <VisitRow key={v.placeId} v={v} onRemove={onRemove} compact={compact} />
+                <VisitRow key={v.placeId} v={v} home={home} onRemove={onRemove} compact={compact} />
               ))}
             </ul>
           </section>
@@ -99,7 +110,7 @@ export default function VisitedList({ visits, onRemove, compact, grouped }: Prop
   return (
     <ul className="space-y-2">
       {visits.map((v) => (
-        <VisitRow key={v.placeId} v={v} onRemove={onRemove} compact={compact} />
+        <VisitRow key={v.placeId} v={v} home={home} onRemove={onRemove} compact={compact} />
       ))}
     </ul>
   );

@@ -1,3 +1,4 @@
+import { distanceKm } from "./distance";
 import { getUniqueVisits } from "./visits";
 import type {
   AgeGroup,
@@ -25,18 +26,6 @@ function youngestAge(family: FamilyProfile): AgeGroup {
 
 function hasBaby(family: FamilyProfile): boolean {
   return family.members.some((m) => m.ageGroup === "baby" || m.ageGroup === "toddler");
-}
-
-function distanceKm(a: HomeBase, b: Pick<Place, "lat" | "lng">): number {
-  const R = 6371;
-  const toRad = (n: number) => (n * Math.PI) / 180;
-  const dLat = toRad(b.lat - a.lat);
-  const dLng = toRad(b.lng - a.lng);
-  const lat1 = toRad(a.lat);
-  const lat2 = toRad(b.lat);
-  const h =
-    Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(h));
 }
 
 const BUDGET_RANK: Record<Place["budget"], number> = {

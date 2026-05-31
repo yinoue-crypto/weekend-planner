@@ -36,6 +36,7 @@ export default function HomePage() {
   }, []);
 
   function refreshCounts() {
+    setHome(loadHome());
     setVisited(getUniqueVisits(loadVisits()));
     setFavoriteCount(loadFavorites().length);
   }
@@ -131,7 +132,7 @@ export default function HomePage() {
           id="visited-list-panel"
           className="mt-3 rounded-3xl bg-green-50/80 dark:bg-stone-800/80 border-2 border-green-100 dark:border-stone-700 px-4 py-4"
         >
-          <VisitedList visits={visited} compact grouped />
+          <VisitedList visits={visited} home={home} compact grouped />
         </section>
       ) : null}
 
