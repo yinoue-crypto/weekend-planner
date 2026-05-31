@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import PlaceCard from "@/components/PlaceCard";
+import { formatTravelMinutes } from "@/lib/distance";
 import { getAllPlaces } from "@/lib/places";
 import { rankPlaces } from "@/lib/scoring";
 import {
@@ -26,6 +27,7 @@ import type {
   VisitRecord,
   WeatherSnapshot,
 } from "@/lib/types";
+import { normalizeSessionChoices, TRAVEL_TIME_LIMITS } from "@/lib/types";
 
 type LastSession = {
   choices: SessionChoices;
@@ -52,7 +54,10 @@ export default function ResultsPage() {
       router.replace("/decide");
       return;
     }
-    setSession(last);
+    setSession({
+      ...last,
+      choices: normalizeSessionChoices(last.choices),
+    });
     setHome(loadHome());
     setFavorites(loadFavorites());
     setVisits(loadVisits());
@@ -125,6 +130,14 @@ export default function ResultsPage() {
     );
   }
 
+  const { minMinutes, maxMinutes } = session.choices.travelTimeRange;
+  const travelFilterLabel =
+    minMinutes <= TRAVEL_TIME_LIMITS.min && maxMinutes >= TRAVEL_TIME_LIMITS.max
+      ? null
+      : minMinutes === maxMinutes
+        ? formatTravelMinutes(minMinutes)
+        : `${formatTravelMinutes(minMinutes)}〜${formatTravelMinutes(maxMinutes)}`;
+
   return (
     <div className="flex flex-col min-h-screen pb-24">
       <header className="px-5 pt-4 safe-top">
@@ -144,6 +157,11 @@ export default function ResultsPage() {
               ? `${ranked.length}件をスコア順に表示`
               : `${ranked.length}件表示（全${allRanked.length}件中）`}
         </p>
+        {travelFilterLabel ? (
+          <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
+            移動時間: {travelFilterLabel}（概算）
+          </p>
+        ) : null}
         {excluded.length > 0 ? (
           <Link
             href="/excluded"

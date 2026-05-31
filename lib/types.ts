@@ -23,6 +23,49 @@ export type Duration = "half" | "full";
 export type Budget = "free" | "low" | "medium" | "high";
 export type Transport = "car" | "train" | "walk";
 
+/** 拠点からの移動時間（分）の探索範囲 */
+export type TravelTimeRange = {
+  minMinutes: number;
+  maxMinutes: number;
+};
+
+export const TRAVEL_TIME_LIMITS = {
+  min: 0,
+  max: 120,
+  step: 5,
+} as const;
+
+export const DEFAULT_TRAVEL_TIME_RANGE: TravelTimeRange = {
+  minMinutes: 0,
+  maxMinutes: 60,
+};
+
+/** 保存済みセッションなど欠損値を補正（未指定時はフィルタなし相当の 0〜120分） */
+export function normalizeTravelTimeRange(
+  range: Partial<TravelTimeRange> | undefined,
+): TravelTimeRange {
+  const { min, max, step } = TRAVEL_TIME_LIMITS;
+  if (
+    !range ||
+    (typeof range.minMinutes !== "number" && typeof range.maxMinutes !== "number")
+  ) {
+    return { minMinutes: min, maxMinutes: max };
+  }
+  const snap = (n: number) => Math.round(n / step) * step;
+  let minMinutes = snap(
+    typeof range.minMinutes === "number" ? range.minMinutes : min,
+  );
+  let maxMinutes = snap(
+    typeof range.maxMinutes === "number" ? range.maxMinutes : max,
+  );
+  minMinutes = Math.min(Math.max(minMinutes, min), max);
+  maxMinutes = Math.min(Math.max(maxMinutes, min), max);
+  if (minMinutes > maxMinutes) {
+    [minMinutes, maxMinutes] = [maxMinutes, minMinutes];
+  }
+  return { minMinutes, maxMinutes };
+}
+
 export type AgeGroup = "baby" | "toddler" | "elementary" | "teen" | "adult";
 
 export const AGE_LABELS: Record<AgeGroup, string> = {
@@ -100,8 +143,19 @@ export type SessionChoices = {
   duration: Duration;
   budget: Budget;
   transport: Transport;
+  /** 拠点からの概算移動時間（分）の範囲 */
+  travelTimeRange: TravelTimeRange;
   preferIndoor: boolean;
 };
+
+export function normalizeSessionChoices(
+  choices: SessionChoices & { travelTimeRange?: TravelTimeRange },
+): SessionChoices {
+  return {
+    ...choices,
+    travelTimeRange: normalizeTravelTimeRange(choices.travelTimeRange),
+  };
+}
 
 export type ScoredPlace = {
   place: Place;
